@@ -7,7 +7,68 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+a {
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+}
+
+ul li {
+  list-style-type: none;
+  text-decoration: none;
+}
+
+.layout {
+  padding: 10px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 6px 18px;
+  position: relative;
+}
+
+.nav-item {
+    font-size: 17px;
+}
+
+.nav a {
+  color: rgb(37, 37, 37);
+  transition: color 0.3s;
+}
+
+.nav a:hover {
+  color: rgb(138, 138, 138);
+}
+
+.logo {
+  font-size: 18px;
+}
+
+.main-container{
+  max-width: 1400px; 
+  margin: auto;
+  width: 100%;
+}
+
+.create-account {
+  margin: auto;
+  width: 1000px;
+}
+
+.btn {
+  border: none;
+  border-radius: 16px;
+  padding: 5px;
+  width: 120px;
+}
+
+.footer {
+  text-align: center;
+  margin-top: 20px;
+  padding: 30px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

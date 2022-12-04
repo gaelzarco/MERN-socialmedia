@@ -1,4 +1,3 @@
-import './App.css';
 import { useState, useEffect } from 'react'
 
 function App() {
@@ -11,7 +10,7 @@ function App() {
   }, [])
 
   return (
-    <div className="App">
+    <div className="main">
       <div>Social Media App</div>
       <div>
         {apiConnection && apiConnection.message}
