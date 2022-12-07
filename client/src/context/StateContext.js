@@ -3,18 +3,21 @@ import { createContext, useContext, useState } from "react";
 const Context = createContext()
 
 export const StateContext = ({ children }) => {
-    const [ user, setUser ] = useState(null)
+    const [ auth, setAuth ] = useState(null)
 
-    const login = (userId) => {
-        setUser(userId)
+    const login = (token) => {
+        setAuth(token)
     }
+
+    const logout = () => setAuth(null)
 
     return (
         <Context.Provider
-        value={[
-            user,
-            login
-        ]}
+        value={{
+            auth,
+            login,
+            logout
+        }}
         >
 
         {children}

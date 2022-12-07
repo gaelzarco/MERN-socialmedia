@@ -1,10 +1,14 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+
+import { useStateContext } from '../context/StateContext'
 
 export default function CreateAccount() {
 
+    const { login } = useStateContext()
     const navigate = useNavigate()
 
+    const [ errMessage, setErrMessage ] = useState(null)
     const [ credentials, setCredentials ] = useState({
         firstName: '',
         lastName: '',
@@ -19,7 +23,7 @@ export default function CreateAccount() {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        await fetch('user', {
+        const res = await fetch('api/user', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -27,12 +31,26 @@ export default function CreateAccount() {
             body: JSON.stringify(credentials)
         })
 
-        navigate('/')
+        const data = await res.json()
+
+        if (res.status === 200) {
+            login(data)
+            navigate('/')
+        } else {
+            setErrMessage(data.message)
+        }
     }
 
     return (
         <div className="create-account">
             <h2>Create Account</h2>
+
+            {errMessage &&
+                <div className="err-msg-container">
+                    {errMessage}
+                </div>
+            }
+
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="firstName"> First Name </label>
@@ -76,23 +94,21 @@ export default function CreateAccount() {
                     />
                 </div>
                 <div>
-                    <label htmlFor='profileImg'> Profile Picture </label>
+                    <label htmlFor='img'> Profile Picture </label>
                     <input
                         type='text'
-                        name='profileImg'
+                        name='img'
                         value={credentials.profileImg}
                         onChange={e => setCredentials({ ...credentials, profileImg: e.target.value })}
-                        required
                     />
                 </div>
                 <div>
                     <label htmlFor='bio'> Bio </label>
-                    <input
+                    <textarea
                         type='text'
                         name='bio'
                         value={credentials.bio}
                         onChange={e => setCredentials({ ...credentials, bio: e.target.value })}
-                        required
                     />
                 </div>
                 <div>
@@ -106,8 +122,10 @@ export default function CreateAccount() {
                         required
                     />
                 </div>
-                <input type='submit' value='Create Account' className='btn'/>
+                <input type='submit' value='Create' className='btn' style={{ textAlign: 'center' }}/>
             </form>
+
+            <button className='btn'><Link to='/login'>Back To Login</Link></button>
         </div>
     )
 }

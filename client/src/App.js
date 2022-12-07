@@ -1,20 +1,18 @@
-import { useState, useEffect } from 'react'
+import { Routes, Route } from "react-router-dom";
+import { ProtectedRoutes, NavBar, SideBar, Feed, Login, CreateAccount } from './components';
 
 function App() {
-  const [ apiConnection, setApiConnection ] = useState(null)
-
-  useEffect(() => {
-    fetch('/api')
-    .then(res => res.json())
-    .then(json => setApiConnection(json))
-  }, [])
-
   return (
     <div className="main">
-      <div>Social Media App</div>
-      <div>
-        {apiConnection && apiConnection.message}
-      </div>
+      <NavBar />
+      <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path='/' element={<Feed />} exact/>
+          </Route>
+        </Routes>
+        <SideBar />
     </div>
   );
 }

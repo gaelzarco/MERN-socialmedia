@@ -25,6 +25,6 @@ app.get('/api', (req, res) => {
 })
 
 const userController = require('./controllers/user_controller')
-app.use('/user', userController)
+app.use('/api/user', userController)
 
 app.listen(PORT, () => console.log(`node processing on PORT ${PORT}`))

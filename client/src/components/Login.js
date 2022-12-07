@@ -6,17 +6,18 @@ import { useStateContext } from "../context/StateContext"
 export default function Login() {
 
     const navigate = useNavigate()
-    const { user, login } = useStateContext()
+    const { login } = useStateContext()
 
+    const [ errMessage, setErrMessage ] = useState(null)
     const [ credentials, setCredentials ] = useState({
-        email: '',
+        userName: '',
         password: ''
     })
 
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const res = await fetch(`http://localhost:5000/user/login`, {
+        const res = await fetch(`api/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -25,50 +26,53 @@ export default function Login() {
         })
 
         const data = await res.json()
-        console.log(data)
 
-        if (res.status(200)) {
-            login(data.user._id)
-            console.log(user)
+        if (res.status === 200) {
+            login(data)
             navigate('/')
+        } else {
+            setErrMessage(data.message)
         }
     }
 
     return (
         <div className="login">
-            {user ? (
-                <>
-                    <p>You are already logged in!</p>
-                    <button className="btn"><Link to='/'>Home</Link></button>
-                </>
-            ) : (
-                <>
-                <form onSubmit={handleSubmit}>
-                        <label htmlFor='email'> Email </label>
-                        <input
-                            type="email"
-                            htmlFor="email"
-                            name="email"
-                            value={credentials.email}
-                            onChange={e => setCredentials({ ...credentials, email: e.target.value })}
-                            required
-                        />
-                        <label htmlFor="password"> Password </label>
-                        <input 
-                            type="password" 
-                            id="password" 
-                            name="password"
-                            value={credentials.password}
-                            onChange={e => setCredentials({ ...credentials, password: e.target.value })}
-                            required
-                        />
-                        <input type="submit" value="login"/>
-                    </form>
+            <h2>Login</h2>
+            
+            {errMessage &&
+                <div className="err-msg-container">
+                    {errMessage}
+                </div>
+            }
 
-                    <p>Don't have an account?</p>
-                    <button className="btn"><Link to='/create-account'>Create Account</Link></button>
-                </>
-            )}
+            <form onSubmit={handleSubmit}>
+                <div>
+                <label htmlFor='userName'> Username </label> 
+                <input
+                    type="text"
+                    htmlFor="userName"
+                    name="userName"
+                    value={credentials.userName}
+                    onChange={e => setCredentials({ ...credentials, userName: e.target.value })}
+                    required
+                />
+                </div>
+                <div>
+                <label htmlFor="password"> Password </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    value={credentials.password}
+                    onChange={e => setCredentials({ ...credentials, password: e.target.value })}
+                    required
+                />
+                </div>
+                <input type="submit" value="Login" className="btn"/>
+            </form>
+
+            <p>Don't have an account?</p>
+            <button className="btn"><Link to='/create-account'>Sign-up</Link></button>
         </div>
     )
 }

@@ -1,67 +1,133 @@
+@font-face {
+  font-family: "GT America Extended";
+  src: url("./fonts/gtamericaextended.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "GT America Extended Bold";
+  src: url("./fonts/gtamericaextendedbold.ttf") format("truetype");
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  color: white;
+  background-color: black;
+  font-family: 'GT America Extended';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.main-container {
+  display: flex;
+  max-width: 1900px; 
+  margin: auto;
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  width: 65vw;
+  height: 100%;
+  margin: auto;
+}
+
+.feed {
+  margin: auto;
+  width: auto;
 }
 
 a {
   font-weight: bold;
   text-decoration: none;
-  color: black;
+  color: white;
 }
 
 ul li {
   list-style-type: none;
   text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  padding-block: 10px;
 }
 
-.layout {
-  padding: 10px;
+form {
+  padding-top: 20px;
+  padding-bottom: 50px;
+  padding-right: 89px;
+  margin: auto;
+  width: 280px;
+  text-align: right;
+}
+
+form .btn {
+  margin-right: 36px;
+}
+
+.side-bar{
+  border-left: solid 1px rgb(73, 73, 73);
+  width: 380px;
 }
 
 .nav {
   display: flex;
-  justify-content: space-between;
-  margin: 6px 18px;
-  position: relative;
+  text-align: left;
+  border-right: 1px solid rgb(73, 73, 73);
+  width: 265px;
+}
+
+.logo {
+  padding-top: 15px;
+  padding-left: 15px;
 }
 
 .nav-item {
     font-size: 17px;
 }
 
-.nav a {
-  color: rgb(37, 37, 37);
-  transition: color 0.3s;
+.nav a{
+  color: white
 }
 
 .nav a:hover {
   color: rgb(138, 138, 138);
 }
 
-.logo {
-  font-size: 18px;
+.nav ul li:hover {
+  color: rgb(138, 138, 138);
 }
 
-.main-container{
-  max-width: 1400px; 
+.login {
+  text-align: center;
   margin: auto;
-  width: 100%;
 }
 
 .create-account {
   margin: auto;
-  width: 1000px;
+  text-align: center;
+}
+
+.err-msg-container {
+  margin: auto;
+  padding: 20px 0px 20px;
+  font-weight: bold;
+  color: red;
 }
 
 .btn {
+  background-color: rgb(184, 108, 255);
+  margin-top: 10px;
   border: none;
-  border-radius: 16px;
-  padding: 5px;
+  border-radius: 100px;
+  padding: 10px;
   width: 120px;
+  font-weight: bold;
+  color: white;
+  transition: all .1s;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: rgb(164, 88, 235);;
 }
 
 .footer {

@@ -12,14 +12,16 @@ const userSchema = new Schema({
     },
     userName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     img: String,
     bio: String,
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
+        minlength: [7, 'Please enter a valid email']
     },
     password: {
         type: String,
