@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
+import { GoX } from "react-icons/go"
 
 import { useStateContext } from '../context/StateContext'
 
@@ -14,7 +15,7 @@ export default function CreateAccount() {
         lastName: '',
         email: '',
         userName: '',
-        profileImg: '',
+        img: '',
         bio: '',
         password: '',
 
@@ -42,8 +43,12 @@ export default function CreateAccount() {
     }
 
     return (
-        <div className="create-account">
-            <h2>Create Account</h2>
+        <div className="login-container">
+            <div className='login'>
+                <div className="login-cancel">
+                    <Link to='/'><GoX size="20px"/></Link>
+                </div>
+            <h2>Create your account</h2>
 
             {errMessage &&
                 <div className="err-msg-container">
@@ -55,6 +60,7 @@ export default function CreateAccount() {
                 <div>
                     <label htmlFor="firstName"> First Name </label>
                     <input
+                    className='text-input'
                         type="text"
                         name="firstName"
                         value={credentials.firstName}
@@ -65,6 +71,7 @@ export default function CreateAccount() {
                 <div>
                     <label htmlFor='lastName'> Last Name </label>
                     <input
+                    className='text-input'
                         type='text'
                         name='lastName'
                         value={credentials.lastName}
@@ -75,9 +82,9 @@ export default function CreateAccount() {
                 <div>
                     <label htmlFor='email'> Email </label>
                     <input
+                        className='text-input'
                         type='email'
                         name='email'
-                        id='email'
                         value={credentials.email}
                         onChange={e => setCredentials({ ...credentials, email: e.target.value })}
                         required
@@ -86,6 +93,7 @@ export default function CreateAccount() {
                 <div>
                     <label htmlFor='userName'> Username </label>
                     <input
+                        className='text-input'
                         type='text'
                         name='userName'
                         value={credentials.userName}
@@ -96,15 +104,17 @@ export default function CreateAccount() {
                 <div>
                     <label htmlFor='img'> Profile Picture </label>
                     <input
+                        className='text-input'
                         type='text'
                         name='img'
-                        value={credentials.profileImg}
-                        onChange={e => setCredentials({ ...credentials, profileImg: e.target.value })}
+                        value={credentials.img}
+                        onChange={e => setCredentials({ ...credentials, img: e.target.value })}
                     />
                 </div>
                 <div>
                     <label htmlFor='bio'> Bio </label>
                     <textarea
+                        className='text-input'
                         type='text'
                         name='bio'
                         value={credentials.bio}
@@ -114,9 +124,9 @@ export default function CreateAccount() {
                 <div>
                     <label htmlFor='password'> Password </label>
                     <input
+                        className='text-input'
                         type='password'
                         name='password'
-                        id='password'
                         value={credentials.password}
                         onChange={e => setCredentials({ ...credentials, password: e.target.value })}
                         required
@@ -124,8 +134,7 @@ export default function CreateAccount() {
                 </div>
                 <input type='submit' value='Create' className='btn' style={{ textAlign: 'center' }}/>
             </form>
-
-            <button className='btn'><Link to='/login'>Back To Login</Link></button>
+            </div>
         </div>
     )
 }

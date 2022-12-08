@@ -1,18 +1,24 @@
 import { Routes, Route } from "react-router-dom";
-import { ProtectedRoutes, NavBar, SideBar, Feed, Login, CreateAccount } from './components';
+import { useStateContext } from "./context/StateContext";
+import { ProtectedRoutes, NavBar, SideBar, Feed, Login, CreateAccount, LandingFooter } from './components';
 
 function App() {
+  const { auth } = useStateContext()
+
   return (
     <div className="main">
       <NavBar />
+      <Feed />
       <Routes>
+        <Route element={<ProtectedRoutes />}>
           <Route path="/login" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
-          <Route element={<ProtectedRoutes />}>
-            <Route path='/' element={<Feed />} exact/>
-          </Route>
-        </Routes>
-        <SideBar />
+        </Route>
+      </Routes>
+      <SideBar />
+
+        {!auth && <LandingFooter/>}
+
     </div>
   );
 }

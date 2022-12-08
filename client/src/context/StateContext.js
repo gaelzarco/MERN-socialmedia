@@ -5,8 +5,9 @@ const Context = createContext()
 export const StateContext = ({ children }) => {
     const [ auth, setAuth ] = useState(null)
 
-    const login = (token) => {
-        setAuth(token)
+    const login = (user) => {
+        setAuth(user)
+        console.log(user)
     }
 
     const logout = () => setAuth(null)

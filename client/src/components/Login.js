@@ -1,5 +1,7 @@
 import { useState } from "react"
 import { useNavigate, Link } from "react-router-dom"
+import { GoOctoface } from "react-icons/go"
+import { GoX } from "react-icons/go"
 
 import { useStateContext } from "../context/StateContext"
 
@@ -36,43 +38,47 @@ export default function Login() {
     }
 
     return (
-        <div className="login">
-            <h2>Login</h2>
-            
-            {errMessage &&
-                <div className="err-msg-container">
-                    {errMessage}
+        <div className="login-container">
+            <div className="login">
+                <div className="login-cancel">
+                <Link to='/'><GoX size="20px"/></Link>
                 </div>
-            }
+                <GoOctoface size="40px" className="logo"/>
+                <h2>Sign in to SM</h2>
+                
+                {errMessage &&
+                    <div className="err-msg-container">
+                        {errMessage}
+                    </div>
+                }
 
-            <form onSubmit={handleSubmit}>
-                <div>
-                <label htmlFor='userName'> Username </label> 
-                <input
-                    type="text"
-                    htmlFor="userName"
-                    name="userName"
-                    value={credentials.userName}
-                    onChange={e => setCredentials({ ...credentials, userName: e.target.value })}
-                    required
-                />
+                <form onSubmit={handleSubmit}>
+                    <div>
+                    <label htmlFor='userName'> Username </label> 
+                    <input
+                        className='text-input'
+                        type="text"
+                        htmlFor="userName"
+                        name="userName"
+                        value={credentials.userName}
+                        onChange={e => setCredentials({ ...credentials, userName: e.target.value })}
+                        required
+                    />
+                    </div>
+                    <div>
+                    <label htmlFor="password"> Password </label>
+                    <input 
+                        className='text-input'
+                        type="password" 
+                        name="password"
+                        value={credentials.password}
+                        onChange={e => setCredentials({ ...credentials, password: e.target.value })}
+                        required
+                    />
+                    </div>
+                    <input type="submit" value="Login" className="btn"/>
+                </form>
                 </div>
-                <div>
-                <label htmlFor="password"> Password </label>
-                <input 
-                    type="password" 
-                    id="password" 
-                    name="password"
-                    value={credentials.password}
-                    onChange={e => setCredentials({ ...credentials, password: e.target.value })}
-                    required
-                />
-                </div>
-                <input type="submit" value="Login" className="btn"/>
-            </form>
-
-            <p>Don't have an account?</p>
-            <button className="btn"><Link to='/create-account'>Sign-up</Link></button>
         </div>
     )
 }

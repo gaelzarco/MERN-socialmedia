@@ -29,9 +29,10 @@ user.post('/', async (req, res) => {
         ...rest,
         password: await bcrypt.hash(password, 10)
     })
-    .then(() => {
-        token = generateAccessToken({ username: req.body.userName })
-        return res.status(200).json({ accessToken: token })
+    .then(async () => {
+        const token = generateAccessToken({ username: req.body.userName })
+        const user = await db.User.findOne({ userName: req.body.userName })
+        return res.status(200).json({ accessToken: token, user: user })
     })
 })
 
@@ -41,7 +42,6 @@ user.post('/login', async (req, res) => {
     }
 
     let user = await db.User.findOne({ userName: req.body.userName })
-    console.log(user)
 
     if (!user) {
         return res.status(400).json({ message: 'Username is incorrect' })
@@ -51,7 +51,7 @@ user.post('/login', async (req, res) => {
         return res.status(400).json({ message: 'Password is incorrect' })
     } else {
         token = generateAccessToken({ username: user.userName })
-        return res.status(200).json({ accessToken: token })
+        return res.status(200).json({ accessToken: token, user: user })
     }
 
 })

@@ -1,26 +1,44 @@
 import { Link } from "react-router-dom"
-import { MdPanoramaPhotosphereSelect } from "react-icons/md"
+import { GoOctoface, GoKebabHorizontal } from "react-icons/go"
 import { useStateContext } from "../context/StateContext"
 
 export default function NavBar() {
     const { auth, logout } = useStateContext()
 
     return (
-        <span className="nav">
-            <div className="logo">
-             <Link to='/'><MdPanoramaPhotosphereSelect size="40px" /></Link>
-            </div>
+        <span className="nav-container">
+            <div className="nav">
+                <div className="nav-logo">
+                <Link to='/'><GoOctoface size="40px"/></Link>
+                </div>
 
-            <ul className="nav-item-container">
-                {auth ? (
-                    <>
-                        <li className="nav-item"><Link to='/'>Feed</Link></li>
-                        <li className="nav-item" onClick={logout}>Logout</li>
-                    </>
-                ) : (
-                    <li className="nav-item"><Link to="/login">Login</Link></li>
+                    {auth ? (
+                        <Link to='/'>
+                            <div className="nav-item-div">
+                                <h4 className="nav-item">Home</h4>
+                            </div>
+                        </Link>
+                    ) : (
+                        <Link to='/'>
+                            <div className="nav-item-div">
+                                <h4 className="nav-item">Explore</h4>
+                            </div>
+                        </Link>
+                    )}
+
+                {auth && (
+                    <footer className="nav-footer">
+                        <div className="nav-user">
+                            <img  className="nav-user-img" src={auth.user.img} alt="Profile"/>
+                            <div className="nav-user-name-container">
+                                <p className="nav-user-name">{auth.user.firstName} {auth.user.lastName}</p>
+                                <p className="nav-user-username">@{auth.user.userName}</p>
+                            </div>
+                            <GoKebabHorizontal size='20px'/>
+                        </div>
+                    </footer>
                 )}
-            </ul>
+            </div>
         </span>
     )
 }

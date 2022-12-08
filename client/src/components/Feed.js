@@ -13,7 +13,11 @@ export default function Feed() {
 
     return (
         <div className='feed'>
-            React Frontend
+            {auth && (
+                <header className='feed-header'>
+                    <h2>Home</h2>
+                </header>
+                )}
             <div>{apiConnection && apiConnection.message}</div>
 
             {auth && (
