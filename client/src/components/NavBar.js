@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import { GoOctoface, GoKebabHorizontal } from "react-icons/go"
+import { GoOctoface, GoKebabHorizontal, GoHome } from "react-icons/go"
 import { useStateContext } from "../context/StateContext"
 
 export default function NavBar() {
@@ -14,15 +14,15 @@ export default function NavBar() {
 
                     {auth ? (
                         <Link to='/'>
-                            <div className="nav-item-div">
-                                <h4 className="nav-item">Home</h4>
-                            </div>
+                            <button className="nav-item-btn">
+                                <GoHome size="40px"/> <span>Home</span>
+                            </button>
                         </Link>
                     ) : (
                         <Link to='/'>
-                            <div className="nav-item-div">
-                                <h4 className="nav-item">Explore</h4>
-                            </div>
+                            <button className="nav-item-btn">
+                                Explore
+                            </button>
                         </Link>
                     )}
 

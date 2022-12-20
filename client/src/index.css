@@ -29,25 +29,167 @@ body {
   height: 99vh; 
 }
 
+.main-static {
+  /* display: absolute; */
+  width: 800px;
+}
+
+.create-post {
+  border-bottom: 1px solid rgb(73, 73, 73);
+}
+
+.create-post-content {
+  display: inline-flex;
+  align-items: center;
+  margin: 20px;
+}
+
+.create-post-input-div {
+  padding-left: 20px;
+  padding-bottom: 10px;
+}
+
+.create-post-input-div:focus-within {
+  border-bottom: 1px solid rgb(73, 73, 73);
+}
+
+.create-post-input {
+  font-family: GT America Extended;
+  font-size: 20px;
+  background-color: black;
+  color: white;
+  width: 450px;
+  height: 40px;
+  border: none;
+}
+
+.create-post-input:focus{
+  outline: none;
+}
+
+.create-post-img {
+  padding-bottom: 40px;
+  padding-left: 100px;
+}
+
+.create-post-img-input {
+  width: 400px;
+  font-family: GT America Extended;
+  font-size: 12px;
+  background-color: black;
+  color: white;
+  border: none;
+}
+
+.create-post-img-input:focus {
+  outline: none;
+}
+
+.create-post-img-input:focus-within {
+  border-bottom: 1px solid rgb(73, 73, 73);
+}
+
+.create-post-img-btn:hover {
+  cursor: pointer;
+}
+
+.create-post-btn {
+  background-color: rgb(184, 108, 255);
+  font-family: GT America Extended Bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 80px;
+  border: none;
+  border-radius: 100px;
+  color: white;
+}
+
+.create-post-btn:hover {
+  background-color: rgb(169, 93, 240);
+}
+
+.create-post-user-img {
+  height: 55px;
+  width: 55px;
+  border-radius: 100px;
+}
+
+.create-post-footer {
+  display: flex;
+  align-items: center;
+  align-content: space-between;
+  justify-content: space-between;
+  padding-left: 95px;
+  padding-right: 10px;
+  padding-bottom: 15px;
+}
+
 .feed {
+  position: absolute;
   width: 600px;
-  height: 100%;
   margin: auto;
   margin-right: 37.3%;
   right: 0;
   left: 0;
-  position: absolute;
   border-right: 1px solid rgb(73, 73, 73);
   border-left: solid 1px rgb(73, 73, 73);
 }
 
 .feed-header {
   top: 0;
+  left: 0;
+  padding-top: 1px;
+  padding-bottom: 10px;
+  padding-left: 20px;
   position: sticky;
-  background-color: rgba(0, 0, 0, 0.342);
+  background-color: rgba(0, 0, 0, 0.699);
   font-size: 12px;
   height: 40px;
-  width: 600px;
+  width: 580px;
+}
+
+.post {
+  padding: 1px;
+}
+
+.post-span {
+  display: flex;
+  justify-content: space-evenly;
+  width: 250px;
+  align-items: center;
+}
+
+.post-span p {
+  color: rgb(68, 68, 68);
+}
+
+.post-body {
+  border-left: 1px solid rgb(73, 73, 73);
+  margin-left: 20px;
+  padding: 5px;
+}
+
+.post-media {
+  padding-top: 20px;
+  padding-left: 40px;
+}
+
+.post-img {
+  width: 500px;
+}
+
+.post-icons {
+  display: flex;
+  width: 50px;
+  justify-content: space-between;
+  padding-top: 20px;
+  padding-bottom: 5px;
+  margin-left: 20px;
+}
+
+.post-space {
+  border-bottom: 1px solid rgb(73, 73, 73);
+  height: 20px;
 }
 
 a {
@@ -62,19 +204,6 @@ ul li {
   font-weight: bold;
   cursor: pointer;
   padding-block: 10px;
-}
-
-form {
-  padding-top: 20px;
-  padding-bottom: 50px;
-  padding-right: 40px;
-  margin: auto;
-  width: 280px;
-  text-align: right;
-}
-
-form .btn {
-  margin-right: 30px;
 }
 
 .text-input {
@@ -131,28 +260,38 @@ form .btn {
 
 .nav-container {
   position: fixed;
-  height: 100%;
-  width: 400px;
+  top: 0;
+  left: 0;
 }
 
 .nav {
-  float: right;
+  height: 100%;
 }
 
-.nav-item-div {
-  border-radius: 16px;
+.nav-item-btn {
+  margin-top: 20px;
+  margin-left: 10px;
+  padding: 10px;
+  display: inline-flex;
+  align-items: center;
+  border: none;
+  border-radius: 100px;
   text-align: left;
-  height: 40px;
-  width: 250px;
+  background-color: black;
+  font-family: GT America Extended Bold;
+  color: white;
+  width: 200px;
   transition: all 0.2s;
+  font-size: 20px;
 }
 
-.nav-item-div:hover {
+.nav-item-btn:hover {
   background-color: rgba(56, 56, 56, 0.438);
 }
 
-.nav-item {
-  font-size: 20px;
+.nav-item-btn
+span {
+  padding-left: 20px;
 }
 
 .nav-footer {
@@ -162,8 +301,9 @@ form .btn {
 }
 
 .nav-user {
+  margin-left: 10px;
   cursor: pointer;
-  padding: 10px;
+  padding: 8px;
   display: flex;
   border-radius: 100px;
   width: 250px;
@@ -197,8 +337,8 @@ form .btn {
 }
 
 .nav-user-img {
-  height: 55px;
-  width: 55px;
+  height: 45px;
+  width: 45px;
   border-radius: 500px;
 }
 
@@ -261,6 +401,19 @@ form .btn {
   border-radius: 40px;
   height: 600px;
   width: 600px;
+}
+
+.login-form {
+  padding-top: 20px;
+  padding-bottom: 50px;
+  padding-right: 40px;
+  margin: auto;
+  width: 280px;
+  text-align: right;
+}
+
+.login-form .btn {
+  margin-right: 30px;
 }
 
 .login-cancel {

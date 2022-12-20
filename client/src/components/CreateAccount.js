@@ -56,7 +56,7 @@ export default function CreateAccount() {
                 </div>
             }
 
-            <form onSubmit={handleSubmit}>
+            <form className="login-form" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="firstName"> First Name </label>
                     <input

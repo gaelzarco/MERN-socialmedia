@@ -7,8 +7,10 @@ function App() {
 
   return (
     <div className="main">
-      <NavBar />
-      <Feed />
+      <div className="main-static">
+        <NavBar />
+        <Feed />
+      </div>
       <Routes>
         <Route element={<ProtectedRoutes />}>
           <Route path="/login" element={<Login />} />

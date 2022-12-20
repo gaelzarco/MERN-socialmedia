@@ -27,4 +27,7 @@ app.get('/api', (req, res) => {
 const userController = require('./controllers/user_controller')
 app.use('/api/user', userController)
 
+const postController = require('./controllers/post_controller')
+app.use('/api/post', postController)
+
 app.listen(PORT, () => console.log(`node processing on PORT ${PORT}`))

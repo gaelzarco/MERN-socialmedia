@@ -52,7 +52,7 @@ export default function Login() {
                     </div>
                 }
 
-                <form onSubmit={handleSubmit}>
+                <form className="login-form" onSubmit={handleSubmit}>
                     <div>
                     <label htmlFor='userName'> Username </label> 
                     <input
