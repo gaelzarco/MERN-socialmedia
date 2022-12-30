@@ -14,7 +14,7 @@ const commentSchema = new Schema({
     },
     likes: [{
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'Like'
     }],
     comments: [{
         type: Schema.Types.ObjectId,

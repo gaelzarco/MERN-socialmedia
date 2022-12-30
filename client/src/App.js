@@ -9,9 +9,9 @@ function App() {
     <div className="main">
       <div className="main-static">
         <NavBar />
-        <Feed />
       </div>
       <Routes>
+        <Route path="/" element={<Feed />}/>
         <Route element={<ProtectedRoutes />}>
           <Route path="/login" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />
@@ -20,7 +20,6 @@ function App() {
       <SideBar />
 
         {!auth && <LandingFooter/>}
-
     </div>
   );
 }

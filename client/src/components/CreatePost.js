@@ -16,7 +16,7 @@ export default function CreatePost() {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const res = await fetch('api/post', {
+        const res = await fetch('/api/posts', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

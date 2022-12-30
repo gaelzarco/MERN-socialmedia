@@ -150,6 +150,7 @@ body {
 
 .post {
   padding: 1px;
+  width: 580px;
 }
 
 .post-span {
@@ -185,6 +186,10 @@ body {
   padding-top: 20px;
   padding-bottom: 5px;
   margin-left: 20px;
+}
+
+.like-btn:hover {
+  cursor: pointer;
 }
 
 .post-space {
@@ -352,9 +357,10 @@ span {
 }
 
 .landing-footer {
+  bottom: 0;
+  left: 0;
   position: fixed;
   display: flex;
-  bottom: 0;
   width: 100vw;
   background-color: rgb(184, 108, 255);
   align-content: center;
