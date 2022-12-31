@@ -8,6 +8,17 @@ posts.get('/', async (req, res) => {
     .catch(err => console.log(err))
 })
 
+posts.get('/:id', async (req, res) => {
+    const id = req.params.id
+    
+    db.Post.findById(id).populate('user', 'firstName lastName userName img')
+    .then(post => {
+        res.status(200).json(post)
+        console.log(post)
+    })
+    .catch(err => console.log(err))
+})
+
 posts.post('/',  authenticateToken, async (req, res) => {
     db.Post.create(req.body)
     .then(() => res.json({ message: 'Post was successful!' }))

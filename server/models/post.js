@@ -21,7 +21,9 @@ const postSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Comment'
     }],
-    createdOn: Date
+    createdOn: {
+        type: Date, default: Date.now
+    }
 })
 
 const Post = mongoose.model('Post', postSchema)

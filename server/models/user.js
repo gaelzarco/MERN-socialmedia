@@ -44,7 +44,9 @@ const userSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User'
     }],
-    createdOn: Date
+    createdOn: {
+        type: Date, default: Date.now
+    }
 })
 
 const User = mongoose.model('User', userSchema)

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import { useEffect } from 'react'
+import { Link } from 'react-router-dom';
 import { useStateContext } from "../context/StateContext";
 import { CreatePost } from "."
 
@@ -7,39 +7,11 @@ import { IoHeartOutline } from "react-icons/io5"
 import { MdComment } from 'react-icons/md';
 
 export default function Feed() {
-    const { auth } = useStateContext()
-    const navigate = useNavigate()
-    
-    const [ posts, setPosts ] = useState(null)
-
-    const fetchPosts = async () => {
-        await fetch(`/api/posts`)
-        .then(res => res.json())
-        .then(data => setPosts(data))
-    }
+    const { auth, navigate, posts, fetchPosts, addLike } = useStateContext()
 
     useEffect(() => {
         fetchPosts()
     }, [])
-
-    const addLike = async (postId) => {
-        if (!auth) {
-            return navigate('/login')
-        }
-
-        const res = await fetch(`/api/posts/like/${auth.user._id}/${postId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth.accessToken}`
-            },
-        })
-
-        const data = await res.json()
-
-        const newPosts = posts.filter((post) => post._id !== data._id)
-        await setPosts([{...data}, ...newPosts])
-    }
     
     return (
         <div className='feed'>
@@ -51,43 +23,46 @@ export default function Feed() {
 
                     <CreatePost />
                 </>
-                )}
-                <div>
-                {posts && posts.length > 0 ? (posts.map((post, i) => {
+            )}
+
+            <div>
+                {posts && posts.length > 0 && (posts.map((post, i) => {
                     return (
-                        <div key={i}>
-                            <div className='post'key={i}>
+                        <div className='post-container'key={i}>
+                            <div className='post'>
                                 {post.user && (
                                     <span className='post-span'>
                                         <img src={post.user.img} alt='profile' style={{height: '30px', width: '30px', borderRadius: '100px'}}/>
-                                        <h3>{post.user.firstName} {post.user.lastName}</h3>
+                                        <h4>{post.user.firstName} {post.user.lastName}</h4>
                                         <p>@{post.user.userName}</p>
                                     </span>
                                 )}
-                                <Link to="/post">
-                                    <div className='post-body'>
-                                        {post.body}
-
-                                        {post.media && (
-                                            <div className='post-media'>
-                                            <img className='post-img' src={post.media} alt='Post-media'/> 
-                                            </div>
-                                        )}
-                                    </div>
-                                </Link>
+                                <div className='post-body' onClick={() => navigate(`/post/${post._id}`)}>
+                                    {post.body}
+                                    {post.media && (
+                                        <div className='post-media'>
+                                        <img className='post-img' src={post.media} alt='Post-media'/> 
+                                        </div>
+                                    )}
+                                </div>
                                 <div className='post-icons'>
-                                    <span>
-                                        <span className='like-btn' onClick={() => addLike(post._id)}><IoHeartOutline /></span>
-                                        <p>{post.likes && post.likes.length}</p>
+                                    <span className='like-btn' onClick={() => addLike(post._id)}>
+                                        <IoHeartOutline size="18px"/>
                                     </span>
-                                    <div className='comment-btn'><MdComment /></div>
+                                    <span>
+                                        {post.likes && post.likes.length}
+                                    </span>
+                                    <Link to={`/post/${post._id}`}>
+                                        <div className='comment-btn'>
+                                            <MdComment size="18px"/>
+                                        </div>
+                                    </Link>
                                 </div>
                             </div>
-                            <div className='post-space' />
                         </div>
                     )
-                })) : <h1>posts not fetched yet...</h1>}
-                </div>
+                }))}
+            </div>
         </div>
     )
 }

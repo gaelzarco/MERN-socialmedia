@@ -30,4 +30,7 @@ app.use('/api/user', userController)
 const postController = require('./controllers/post_controller')
 app.use('/api/posts', postController)
 
+const likeController = require('./controllers/like_controller')
+app.use('/api/like', likeController)
+
 app.listen(PORT, () => console.log(`node processing on PORT ${PORT}`))

@@ -1,6 +1,9 @@
-import { Link } from "react-router-dom"
-import { GoOctoface, GoKebabHorizontal, GoHome } from "react-icons/go"
 import { useStateContext } from "../context/StateContext"
+
+import { Link } from "react-router-dom"
+
+import { GoOctoface, GoKebabHorizontal, GoHome } from "react-icons/go"
+import { FaSlackHash } from "react-icons/fa"
 
 export default function NavBar() {
     const { auth, logout } = useStateContext()
@@ -9,19 +12,19 @@ export default function NavBar() {
         <span className="nav-container">
             <div className="nav">
                 <div className="nav-logo">
-                <Link to='/'><GoOctoface size="40px"/></Link>
+                <Link to='/'><GoOctoface size="30px"/></Link>
                 </div>
 
                     {auth ? (
                         <Link to='/'>
                             <button className="nav-item-btn">
-                                <GoHome size="40px"/> <span>Home</span>
+                                <GoHome size="30px"/> <span>Home</span>
                             </button>
                         </Link>
                     ) : (
                         <Link to='/'>
                             <button className="nav-item-btn">
-                                Explore
+                                <FaSlackHash size="30px"/> <span>Explore</span>
                             </button>
                         </Link>
                     )}

@@ -5,7 +5,7 @@ export default function LandingFooter() {
         <footer className="landing-footer">
             <div className="landing-footer-text">
                 <h3>Don't miss out on what your friends are posting</h3>
-                <p>People on Social Media are the first to know.</p>
+                <p>Our users are the first to know.</p>
             </div>
 
             <div className="landing-footer-btn-container">
