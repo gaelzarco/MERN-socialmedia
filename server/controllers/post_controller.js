@@ -1,31 +1,40 @@
-const posts = require('express').Router()
+const post = require('express').Router()
 const db = require('../models')
 const authenticateToken = require('../utils')
 
-posts.get('/', async (req, res) => {
+post.get('/', async (req, res) => {
     db.Post.find().populate('user', 'firstName lastName userName img')
     .then(post => res.status(200).json(post))
     .catch(err => console.log(err))
 })
 
-posts.get('/:id', async (req, res) => {
+post.get('/:id', async (req, res) => {
     const id = req.params.id
     
-    db.Post.findById(id).populate('user', 'firstName lastName userName img')
+    db.Post.findById(id)
+    .populate('user', 'firstName lastName userName img')
+    .populate({ 
+        path: 'comments', 
+        populate: {
+            path: 'user',
+            select: 'firstName lastName userName img'
+        }
+    })
+    .exec()
     .then(post => {
-        res.status(200).json(post)
         console.log(post)
+        res.status(200).json(post)
     })
     .catch(err => console.log(err))
 })
 
-posts.post('/',  authenticateToken, async (req, res) => {
+post.post('/',  authenticateToken, async (req, res) => {
     db.Post.create(req.body)
     .then(() => res.json({ message: 'Post was successful!' }))
     .catch(err => console.log(err))
 })
 
-posts.post('/like/:userId/:postId', authenticateToken, async (req, res) => {
+post.post('/like/:userId/:postId', authenticateToken, async (req, res) => {
     const user = await db.User.findById(req.params.userId)
     const post = await db.Post.findById(req.params.postId).populate('user', 'firstName lastName userName img')
     console.log(post)
@@ -51,4 +60,4 @@ posts.post('/like/:userId/:postId', authenticateToken, async (req, res) => {
     }
 })
 
-module.exports = posts
+module.exports = post

@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import  { useParams, Link } from "react-router-dom"
 import { useStateContext } from "../context/StateContext";
+import { CreateComment } from "."
 
 import { IoMdArrowRoundBack } from "react-icons/io"
 import { IoHeartOutline } from "react-icons/io5"
@@ -9,9 +10,13 @@ export default function Post() {
     const { id } = useParams()
     const { auth, post, fetchPost, addLike } = useStateContext()
 
+    console.log(id)
+
     useEffect(() => {
         fetchPost(id)
-    }, [id])
+    }, [fetchPost, id])
+
+    console.log(post)
 
     return (
         <div className="feed">
@@ -21,7 +26,7 @@ export default function Post() {
             </header>
 
             {post._id === id && (
-                <div className="post-container">
+                <div className="postId-container">
                     <div className="post">
                         <span className='postId-span'>
                             <img src={post.user.img} alt='profile' style={{height: '50px', width: '50px', borderRadius: '100px'}}/>
@@ -32,12 +37,12 @@ export default function Post() {
                         </span>
 
                         <div className='postId-body'>
-                                {post.body}
-                                {post.media && (
-                                    <div className='post-media'>
+                            {post.body}
+                            {post.media && (
+                                <div className='postId-media'>
                                     <img className='post-img' src={post.media} alt='Post-media'/> 
-                                    </div>
-                                )}
+                                </div>
+                            )}
                         </div>
                         <div className='postId-icons'>
                             <span className='postId-like-btn' onClick={() => addLike(post._id)}>
@@ -47,8 +52,47 @@ export default function Post() {
                                 <p style={{marginBottom: '21px'}}>{post.likes && post.likes.length} Likes</p>
                             </span>
                         </div>
+                        {auth && (
+                            <div className="create-post">
+                                <CreateComment postId={id} />
+                            </div>
+                        )}
                     </div>
                 </div>
+            )}
+
+            {post.comments.length !== undefined && (
+                post.comments.map((comment, i) => {
+                    return (
+                        <div className="post-container">
+                            <div className="post" key={i}>
+                                <span className='post-span'>
+                                    <img src={comment.user.img} alt='profile' style={{height: '30px', width: '30px', borderRadius: '100px'}}/>
+                                    <h4>{comment.user.firstName} {comment.user.lastName}</h4>
+                                    <p>@{comment.user.userName}</p>
+                                </span>
+        
+                                <div className='post-body'>
+                                        {comment.body}
+                                        {comment.media && (
+                                            <div className='post-media'>
+                                            <img className='post-img' src={comment.media} alt='Post-media'/> 
+                                            </div>
+                                        )}
+                                </div>
+
+                                <div className='post-icons'>
+                                    <span className='post-like-btn' onClick={() => addLike(comment._id)}>
+                                        <IoHeartOutline size="23px"/>
+                                    </span>
+                                    <span>
+                                        <p style={{marginBottom: '21px'}}>{comment.likes && comment.likes.length} Likes</p>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    )
+                })
             )}
         </div>
     )

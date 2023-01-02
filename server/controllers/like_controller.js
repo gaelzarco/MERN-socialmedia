@@ -1,8 +1,8 @@
-const likes = require('express').Router()
+const like = require('express').Router()
 const db = require('../models')
 const authenticateToken = require('../utils')
 
-likes.post('/:userId/:postId', authenticateToken, async(req, res) => {
+like.post('/:userId/:postId', authenticateToken, async(req, res) => {
     const user = await db.User.findById(req.params.userId)
     const post = await db.Post.findById(req.params.postId).populate('user', 'firstName lastName userName img')
     console.log(post)
@@ -28,4 +28,4 @@ likes.post('/:userId/:postId', authenticateToken, async(req, res) => {
     }
 })
 
-module.exports = likes
+module.exports = like

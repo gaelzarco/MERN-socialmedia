@@ -1,28 +1,30 @@
-import { useState } from 'react'
-import { useStateContext } from "../context/StateContext"
-import { GoFileMedia } from "react-icons/go"
+import { useState } from "react";
+import { useStateContext } from "../context/StateContext";
 
-export default function CreatePost() {
+import { GoFileMedia } from "react-icons/go";
+
+export default function CreateComment({ postId }) {
     const { auth } = useStateContext()
+    console.log(postId)
 
-    const [ post, setPost ] = useState({
-        user: auth.user,
+    const [ comment, setComment ] = useState({
+        user: auth && auth.user,
         body: '',
-        media: ''
+        media: '',
     })
-    
+
     const [ imgView, setImgView ] = useState(false)
 
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const res = await fetch('/api/posts', {
+        const res = await fetch(`/api/comments/${postId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${auth.accessToken}`
             },
-            body: JSON.stringify(post)
+            body: JSON.stringify(comment)
         })
 
         const data = await res.json()
@@ -37,8 +39,8 @@ export default function CreatePost() {
     }
 
     return (
-        <div className="create-post">
-           <form onSubmit={handleSubmit} autoComplete='off'>
+        <div className='create-post'>
+            <form onSubmit={handleSubmit} autoComplete='off'>
                 <div className="create-post-content">
                         <img className="create-post-user-img" src={auth.user.img} alt='User'/>
                         <div className="create-post-input-div">
@@ -48,8 +50,8 @@ export default function CreatePost() {
                                 htmlFor='body'
                                 name='body'
                                 placeholder="Share your thoughts"
-                                value={post.body}
-                                onChange={e => setPost({ ...post, body: e.target.value })}
+                                value={comment.body}
+                                onChange={e => setComment({ ...comment, body: e.target.value })}
                                 required
                             />
                         </div>
@@ -62,8 +64,8 @@ export default function CreatePost() {
                         htmlFor='img'
                         name='img'
                         placeholder='Provide img link here'
-                        value={post.media}
-                        onChange={e => setPost({ ...post, media: e.target.value })}
+                        value={comment.media}
+                        onChange={e => setComment({ ...comment, media: e.target.value })}
                         />
                     </div>
                 )}

@@ -1,12 +1,14 @@
-import { useStateContext } from "../context/StateContext"
-
+import { useState } from "react"
 import { Link } from "react-router-dom"
+import { useStateContext } from "../context/StateContext"
 
 import { GoOctoface, GoKebabHorizontal, GoHome } from "react-icons/go"
 import { FaSlackHash } from "react-icons/fa"
 
 export default function NavBar() {
     const { auth, logout } = useStateContext()
+
+    const [ logoutDisplay, setLogoutDisplay ] = useState(false)
 
     return (
         <span className="nav-container">
@@ -31,7 +33,15 @@ export default function NavBar() {
 
                 {auth && (
                     <footer className="nav-footer">
-                        <div className="nav-user">
+                        {logoutDisplay === true && (
+                            <div>
+                                <h3 onClick={() => {
+                                    logout()
+                                    setLogoutDisplay(!logoutDisplay)    
+                                }}>logout</h3>
+                            </div>
+                        )}
+                        <div className="nav-user" onClick={() => setLogoutDisplay(!logoutDisplay)}>
                             <img  className="nav-user-img" src={auth.user.img} alt="Profile"/>
                             <div className="nav-user-name-container">
                                 <p className="nav-user-name">{auth.user.firstName} {auth.user.lastName}</p>

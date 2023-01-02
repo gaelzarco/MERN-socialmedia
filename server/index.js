@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
-require('dotenv').config()
+require('dotenv').  config()
 const app = express()
 app.use(cors())
 app.use(express.static('public'))
@@ -29,6 +29,9 @@ app.use('/api/user', userController)
 
 const postController = require('./controllers/post_controller')
 app.use('/api/posts', postController)
+
+const commentController = require('./controllers/comment_controller')
+app.use('/api/comments', commentController)
 
 const likeController = require('./controllers/like_controller')
 app.use('/api/like', likeController)

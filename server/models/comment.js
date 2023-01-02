@@ -2,9 +2,14 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose
 
 const commentSchema = new Schema({
+    post: {
+        type: Schema.Types.ObjectId,
+        ref: 'Post'
+    },
     user: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true
     },
     media: String,
     body: {
@@ -21,7 +26,8 @@ const commentSchema = new Schema({
         ref: 'Comment'
     }],
     createdOn: {
-        type: Date, default: Date.now
+        type: Date, 
+        default: Date.now
     }
 })
 
