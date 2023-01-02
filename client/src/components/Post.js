@@ -14,7 +14,7 @@ export default function Post() {
 
     useEffect(() => {
         fetchPost(id)
-    }, [fetchPost, id])
+    }, [id])
 
     console.log(post)
 
@@ -53,7 +53,7 @@ export default function Post() {
                             </span>
                         </div>
                         {auth && (
-                            <div className="create-post">
+                            <div>
                                 <CreateComment postId={id} />
                             </div>
                         )}
@@ -61,11 +61,11 @@ export default function Post() {
                 </div>
             )}
 
-            {post.comments.length !== undefined && (
+            {post.comments ? (
                 post.comments.map((comment, i) => {
                     return (
-                        <div className="post-container">
-                            <div className="post" key={i}>
+                        <div className="post-container" key={i}>
+                            <div className="post">
                                 <span className='post-span'>
                                     <img src={comment.user.img} alt='profile' style={{height: '30px', width: '30px', borderRadius: '100px'}}/>
                                     <h4>{comment.user.firstName} {comment.user.lastName}</h4>
@@ -93,7 +93,7 @@ export default function Post() {
                         </div>
                     )
                 })
-            )}
+            ) : <h1>Start the conversation</h1>}
         </div>
     )
 }

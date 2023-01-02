@@ -24,7 +24,7 @@ export const StateContext = ({ children }) => {
     }
 
     const fetchPost = async (postId) => {
-        await fetch(`api/posts/${postId}`)
+        await fetch(`/api/posts/${postId}`)
         .then(res => res.json())
         .then(data => setPost(data))
     }

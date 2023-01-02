@@ -38,6 +38,10 @@ body {
   width: 597px;
 }
 
+.create-comment {
+  width: 597px;
+}
+
 .create-post-content {
   display: inline-flex;
   align-items: center;

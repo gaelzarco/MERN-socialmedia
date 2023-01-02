@@ -39,7 +39,7 @@ export default function CreateComment({ postId }) {
     }
 
     return (
-        <div className='create-post'>
+        <div className='create-comment'>
             <form onSubmit={handleSubmit} autoComplete='off'>
                 <div className="create-post-content">
                         <img className="create-post-user-img" src={auth.user.img} alt='User'/>

@@ -11,7 +11,7 @@ export default function Feed() {
 
     useEffect(() => {
         fetchPosts()
-    }, [fetchPosts])
+    }, [])
     
     return (
         <div className='feed'>
