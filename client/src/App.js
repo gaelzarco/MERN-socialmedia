@@ -1,9 +1,18 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useStateContext } from "./context/StateContext";
 import { ProtectedRoutes, NavBar, SideBar, Feed, Post, Login, CreateAccount, LandingFooter } from './components';
 
 function App() {
-  const { auth } = useStateContext()
+  const { auth, setAuth } = useStateContext()
+
+  const localUser = localStorage.getItem('user')
+
+  useEffect(() => {
+    if (localUser) {
+      setAuth(JSON.parse(localUser))
+    } 
+  }, [setAuth])
 
   return (
     <div className="main">

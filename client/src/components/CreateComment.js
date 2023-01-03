@@ -5,7 +5,6 @@ import { GoFileMedia } from "react-icons/go";
 
 export default function CreateComment({ postId }) {
     const { auth } = useStateContext()
-    console.log(postId)
 
     const [ comment, setComment ] = useState({
         user: auth && auth.user,

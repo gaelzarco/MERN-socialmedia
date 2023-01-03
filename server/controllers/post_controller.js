@@ -4,14 +4,14 @@ const authenticateToken = require('../utils')
 
 post.get('/', async (req, res) => {
     db.Post.find().populate('user', 'firstName lastName userName img')
-    .then(post => res.status(200).json(post))
+    .then(posts => res.status(200).json(posts))
     .catch(err => console.log(err))
 })
 
 post.get('/:id', async (req, res) => {
     const id = req.params.id
     
-    db.Post.findById(id)
+    const post = await db.Post.findById(id)
     .populate('user', 'firstName lastName userName img')
     .populate({ 
         path: 'comments', 
@@ -20,43 +20,19 @@ post.get('/:id', async (req, res) => {
             select: 'firstName lastName userName img'
         }
     })
-    .exec()
-    .then(post => {
-        res.status(200).json(post)
-    })
-    .catch(err => console.log(err))
+
+    if (post) return res.status(200).json(post)
 })
 
 post.post('/',  authenticateToken, async (req, res) => {
-    db.Post.create(req.body)
-    .then(() => res.json({ message: 'Post was successful!' }))
-    .catch(err => console.log(err))
-})
-
-post.post('/like/:userId/:postId', authenticateToken, async (req, res) => {
-    const user = await db.User.findById(req.params.userId)
-    const post = await db.Post.findById(req.params.postId).populate('user', 'firstName lastName userName img')
-    console.log(post)
-
-    if (!user || !post) return res.status(400).json({ message: 'Something went wrong...' })
-
-    const found = post.likes.find(like => {
-        return like.toString() === user._id.toString()
-    })
-
-    if (found) {
-        post.likes.remove(user)
-        user.likes.remove(post)
-        post.save()
-        user.save()
-        return res.status(200).json(post)
-    } else {
-        post.likes.push(user)
-        user.likes.push(post)
-        post.save()
-        user.save()
-        return res.status(200).json(post)
-    }
+    const post = await db.Post.create(req.body)
+    
+    if (post) {
+        const user = await db.User.findById(req.body.user._id)
+        user.posts.push(post)
+        await user.save()
+        return res.status(200).json({ message: 'Post was successful!' })
+    } else return res.status(400).json({ messsage: 'Post was not successful!' })
 })
 
 module.exports = post

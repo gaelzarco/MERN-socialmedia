@@ -12,12 +12,12 @@ comment.post('/:postId', authenticateToken, async(req, res) => {
     const post = await db.Post.findById(req.params.postId)
     if (!post) return res.status(400).json({ message: 'Something went wrong..' })
 
-    const newComment = await db.Comment.create({ user, ...rest })
+    const newComment = await db.Comment.create({ user, post, ...rest })
 
     post.comments.push(newComment)
     newCommentUser.comments.push(newComment)
-    post.save()
-    newCommentUser.save()
+    await post.save()
+    await newCommentUser.save()
     return res.status(200).json(post)
 })
 

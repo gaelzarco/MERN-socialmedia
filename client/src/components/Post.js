@@ -10,13 +10,9 @@ export default function Post() {
     const { id } = useParams()
     const { auth, post, fetchPost, addLike } = useStateContext()
 
-    console.log(id)
-
     useEffect(() => {
         fetchPost(id)
-    }, [id])
-
-    console.log(post)
+    }, [id, addLike])
 
     return (
         <div className="feed">
@@ -45,7 +41,7 @@ export default function Post() {
                             )}
                         </div>
                         <div className='postId-icons'>
-                            <span className='postId-like-btn' onClick={() => addLike(post._id)}>
+                            <span className='postId-like-btn' onClick={() => addLike(post._id, true)}>
                                 <IoHeartOutline size="23px"/>
                             </span>
                             <span>
@@ -86,7 +82,7 @@ export default function Post() {
                                         <IoHeartOutline size="23px"/>
                                     </span>
                                     <span>
-                                        <p style={{marginBottom: '21px'}}>{comment.likes && comment.likes.length} Likes</p>
+                                        <p style={{marginBottom: '21px'}}>{comment.likes.length} Likes</p>
                                     </span>
                                 </div>
                             </div>

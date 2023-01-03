@@ -46,17 +46,20 @@ export default function Feed() {
                                     )}
                                 </div>
                                 <div className='post-icons'>
-                                    <span className='like-btn' onClick={() => addLike(post._id)}>
+                                    <span className='like-btn' onClick={() => addLike(post._id, true)}>
                                         <IoHeartOutline size="18px"/>
                                     </span>
                                     <span>
                                         {post.likes && post.likes.length}
                                     </span>
                                     <Link to={`/post/${post._id}`}>
-                                        <div className='comment-btn'>
+                                        <span className='comment-btn'>
                                             <MdComment size="18px"/>
-                                        </div>
+                                        </span>
                                     </Link>
+                                    <span>
+                                        {post.comments && post.comments.length}
+                                    </span>
                                 </div>
                             </div>
                         </div>

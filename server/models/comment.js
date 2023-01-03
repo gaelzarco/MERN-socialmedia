@@ -6,6 +6,10 @@ const commentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Post'
     },
+    replyTo : {
+        type: Schema.Types.ObjectId,
+        ref: 'Comment'
+    },
     user: {
         type: Schema.Types.ObjectId,
         ref: 'User',

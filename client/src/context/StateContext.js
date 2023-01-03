@@ -12,10 +12,13 @@ export const StateContext = ({ children }) => {
 
     const login = (user) => {
         setAuth(user)
-        console.log(user)
+        localStorage.setItem('user', JSON.stringify(user))
     }
 
-    const logout = () => setAuth(null)
+    const logout = () => {
+        setAuth(null)
+        localStorage.clear()
+    }
 
     const fetchPosts = async () => {
         await fetch(`/api/posts`)
@@ -29,24 +32,26 @@ export const StateContext = ({ children }) => {
         .then(data => setPost(data))
     }
 
-    const addLike = async (postId) => {
+    const addLike = async (id, postBool) => {
         if (!auth) {
             return navigate('/login')
         }
 
-        const res = await fetch(`/api/like/${auth.user._id}/${postId}`, {
+        const res = await fetch(`/api/like/${postBool === true ? id : 'comment/' + id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${auth.accessToken}`
             },
+            body: JSON.stringify(auth.user)
         })
 
         const data = await res.json()
+        console.log(data)
 
-        const newPosts = posts.filter((post) => post._id !== data._id)
-        await setPosts([{...data}, ...newPosts])
-        await setPost(post => post = data)
+        const newPosts = posts.filter(post => post._id !== data._id)
+        setPosts([{...data}, ...newPosts])
+        setPost(post => post = data)
     }
 
     return (
@@ -54,6 +59,7 @@ export const StateContext = ({ children }) => {
         value={{
             navigate,
             auth,
+            setAuth,
             login,
             logout,
             posts,
