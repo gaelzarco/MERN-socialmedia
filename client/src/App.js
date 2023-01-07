@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useStateContext } from "./context/StateContext";
-import { ProtectedRoutes, NavBar, SideBar, Feed, Post, Login, CreateAccount, LandingFooter } from './components';
+import { ProtectedRoutes, NavBar, SideBar, Feed, Post, Comment, Login, CreateAccount, LandingFooter } from './components';
 
 function App() {
   const { auth, setAuth } = useStateContext()
@@ -12,7 +12,7 @@ function App() {
     if (localUser) {
       setAuth(JSON.parse(localUser))
     } 
-  }, [setAuth])
+  }, [setAuth, localUser])
 
   return (
     <div className="main">
@@ -21,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Feed />}/>
         <Route path="/post/:id" element={<Post />} />
+        <Route path='comment/:id' element={<Comment />} />
         <Route element={<ProtectedRoutes />}>
           <Route path="/login" element={<Login />} />
           <Route path="/create-account" element={<CreateAccount />} />

@@ -1,14 +1,12 @@
 import { useState } from "react"
-import { useNavigate, Link } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { GoOctoface } from "react-icons/go"
 import { GoX } from "react-icons/go"
 
 import { useStateContext } from "../context/StateContext"
 
 export default function Login() {
-
-    const navigate = useNavigate()
-    const { login } = useStateContext()
+    const { login, navigate } = useStateContext()
 
     const [ errMessage, setErrMessage ] = useState(null)
     const [ credentials, setCredentials ] = useState({
@@ -31,7 +29,7 @@ export default function Login() {
 
         if (res.status === 200) {
             login(data)
-            navigate('/')
+            navigate(-1)
         } else {
             setErrMessage(data.message)
         }

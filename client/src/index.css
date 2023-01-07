@@ -179,7 +179,7 @@ body {
 
 .post {
   padding: 1px;
-  width: 580px;
+  width: 599px;
 }
 
 .post-span {
@@ -195,11 +195,15 @@ body {
   width: 250px;
   align-items: center;
   margin-left: -20px;
+  padding-bottom: 10px;
 }
 
 .post-span p,
 .postId-span p {
   color: rgb(68, 68, 68);
+}
+.postId-user-div p {
+  margin-top: -15px;
 }
 
 .post-body {
@@ -317,7 +321,7 @@ ul li {
 .nav-container {
   /* display: inline-flex; */
   position: fixed;
-  margin-left: -100px;
+  margin-left: -200px;
   width: 300px;
   /* position: fixed;
   top: 0;
@@ -439,6 +443,48 @@ span {
   top: 35%;
   border: none;
   border-radius: 16px;
+}
+
+.commentId-container {
+  z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(244, 232, 255, 0.344);
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.commentId {
+  margin: auto;
+  background-color: black;
+  border-radius: 20px;
+  height: auto;
+  width: 600px;
+}
+
+.commentId-header {
+  display: inline-flex;
+  align-items: center;
+  top: 0;
+  left: 0;
+  border-radius: 20px;
+  padding-top: 20px;
+  padding-bottom: 10px;
+  padding-left: 20px;
+  position: sticky;
+  background-color: rgba(0, 0, 0, 0.699);
+  font-size: 12px;
+  height: 40px;
+  width: 580px;
+}
+
+.commentId-header-title {
+  padding-left: 20px;
 }
 
 .login-container {

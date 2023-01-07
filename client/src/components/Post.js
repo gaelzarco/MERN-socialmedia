@@ -8,11 +8,11 @@ import { IoHeartOutline } from "react-icons/io5"
 
 export default function Post() {
     const { id } = useParams()
-    const { auth, post, fetchPost, addLike } = useStateContext()
+    const { auth, post, fetchPost, addLike, navigate } = useStateContext()
 
     useEffect(() => {
         fetchPost(id)
-    }, [id, addLike])
+    }, [id, fetchPost, addLike])
 
     return (
         <div className="feed">
@@ -25,8 +25,8 @@ export default function Post() {
                 <div className="postId-container">
                     <div className="post">
                         <span className='postId-span'>
-                            <img src={post.user.img} alt='profile' style={{height: '50px', width: '50px', borderRadius: '100px'}}/>
-                            <div>
+                            <img src={post.user.img} alt='profile' style={{height: '50px', width: '50px', borderRadius: '100px', marginTop: '10px'}}/>
+                            <div className="postId-user-div">
                                 <h4>{post.user.firstName} {post.user.lastName}</h4>
                                 <p>@{post.user.userName}</p>
                             </div>
@@ -48,12 +48,12 @@ export default function Post() {
                                 <p style={{marginBottom: '21px'}}>{post.likes && post.likes.length} Likes</p>
                             </span>
                         </div>
-                        {auth && (
-                            <div>
+                    </div>
+                    {auth && (
+                            <div className="postId-create-comment">
                                 <CreateComment postId={id} />
                             </div>
                         )}
-                    </div>
                 </div>
             )}
 
@@ -68,7 +68,7 @@ export default function Post() {
                                     <p>@{comment.user.userName}</p>
                                 </span>
         
-                                <div className='post-body'>
+                                <div className='post-body' onClick={() => navigate(`/comment/${comment._id}`)}>
                                         {comment.body}
                                         {comment.media && (
                                             <div className='post-media'>

@@ -32,6 +32,12 @@ export const StateContext = ({ children }) => {
         .then(data => setPost(data))
     }
 
+    const fetchComment = async (commentId) => {
+        await fetch(`/api/comments/${commentId}`)
+        .then(res => res.json())
+        .then(data => {return data})
+    }
+
     const addLike = async (id, postBool) => {
         if (!auth) {
             return navigate('/login')
