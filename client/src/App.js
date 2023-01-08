@@ -15,23 +15,24 @@ function App() {
   }, [setAuth, localUser])
 
   return (
-    <div className="main">
+    <>
       <div className="main-static">
         <NavBar />
-      <Routes>
-        <Route path="/" element={<Feed />}/>
-        <Route path="/post/:id" element={<Post />} />
-        <Route path='comment/:id' element={<Comment />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-        </Route>
-      </Routes>
-      <SideBar />
+          <Routes>
+            <Route path="/" element={<Feed />} />
+            <Route path="/post/:id" element={<Post />} />
+            <Route path='comment/:id' element={<Comment />} />
+            <Route element={<ProtectedRoutes />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/create-account" element={<CreateAccount />} />
+            </Route>
+          </Routes>
+        <SideBar />
       </div>
 
-        {!auth && <LandingFooter/>}
-    </div>
+      {!auth && <LandingFooter/>}
+
+    </>
   );
 }
 

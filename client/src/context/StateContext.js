@@ -26,18 +26,6 @@ export const StateContext = ({ children }) => {
         .then(data => setPosts(data))
     }
 
-    const fetchPost = async (postId) => {
-        await fetch(`/api/posts/${postId}`)
-        .then(res => res.json())
-        .then(data => setPost(data))
-    }
-
-    const fetchComment = async (commentId) => {
-        await fetch(`/api/comments/${commentId}`)
-        .then(res => res.json())
-        .then(data => {return data})
-    }
-
     const addLike = async (id, postBool) => {
         if (!auth) {
             return navigate('/login')
@@ -68,10 +56,11 @@ export const StateContext = ({ children }) => {
             setAuth,
             login,
             logout,
+            setPosts,
             posts,
+            setPost,
             post,
             fetchPosts,
-            fetchPost,
             addLike,
         }}
         >

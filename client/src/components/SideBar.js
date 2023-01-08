@@ -5,8 +5,8 @@ export default function SideBar() {
     const { auth } = useStateContext()
 
     return (
-        <span className="side-bar">
-            <ul className="side-bar-list">
+        <div className="side-bar-container">
+            <div className="side-bar">
                 {auth ? (
                         <li className="side-bar-item">Placeholder</li>
                 ) : (
@@ -14,15 +14,15 @@ export default function SideBar() {
                         <h2>New to Social media?</h2>
                         <p>Sign-up and share your thoughts with the world!</p>
                         <div className="side-bar-btn-container">
-                            <Link to='/create-account'><li className="side-bar-item"><button className="side-bar-btn">Sign-Up with E-mail</button></li></Link>
+                            <Link to='/create-account'><button className="side-bar-btn">Sign-Up with E-mail</button></Link>
                         </div>
                         <div className="side-bar-btn-container">
-                            <Link to="/login"><li className="side-bar-item"><button className="side-bar-btn">Login</button></li></Link>
+                            <Link to="/login"><button className="side-bar-btn">Login</button></Link>
                         </div>
                         <p>By signing up, you agree to the Terms Of Service and Privacy Policy, including Cookie Use.</p>
                     </div>
                 )}
-            </ul>
-        </span>
+            </div>
+        </div>
     )
 }

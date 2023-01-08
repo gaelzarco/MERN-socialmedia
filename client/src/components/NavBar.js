@@ -11,7 +11,7 @@ export default function NavBar() {
     const [ logoutDisplay, setLogoutDisplay ] = useState(false)
 
     return (
-        <span className="nav-container">
+        <div className="nav-container">
             <div className="nav">
                 <div className="nav-logo">
                 <Link to='/'><GoOctoface size="30px"/></Link>
@@ -52,6 +52,6 @@ export default function NavBar() {
                     </footer>
                 )}
             </div>
-        </span>
+        </div>
     )
 }

@@ -4,13 +4,13 @@ export default function Layout({ children }) {
     return (
         <div className="layout">
             <Helmet>
-                <title>MERN Social Media</title>
+                <title> Social Media</title>
                 <meta
                     name = "description"
                     content = "MERN Full-stack Social Media App"
                 />
             </Helmet>
-            <main className="main-container">
+            <main className="main">
                 {children}
             </main>
         </div>

@@ -7,11 +7,13 @@ import { IoHeartOutline } from "react-icons/io5"
 import { MdComment } from 'react-icons/md';
 
 export default function Feed() {
-    const { auth, navigate, posts, fetchPosts, addLike } = useStateContext()
+    const { auth, navigate, setPosts, posts, addLike } = useStateContext()
 
     useEffect(() => {
-        fetchPosts()
-    })
+        fetch(`/api/posts`)
+        .then(res => res.json())
+        .then(data => setPosts(data))
+    }, [setPosts])
     
     return (
         <div className='feed'>

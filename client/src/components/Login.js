@@ -4,6 +4,7 @@ import { GoOctoface } from "react-icons/go"
 import { GoX } from "react-icons/go"
 
 import { useStateContext } from "../context/StateContext"
+import Feed from "./Feed"
 
 export default function Login() {
     const { login, navigate } = useStateContext()
@@ -36,47 +37,51 @@ export default function Login() {
     }
 
     return (
-        <div className="login-container">
-            <div className="login">
-                <div className="login-cancel">
-                <Link to='/'><GoX size="20px"/></Link>
-                </div>
-                <GoOctoface size="40px" className="logo"/>
-                <h2>Sign in to SM</h2>
-                
-                {errMessage &&
-                    <div className="err-msg-container">
-                        {errMessage}
+        <>
+            <Feed />
+            
+            <div className="login-container">
+                <div className="login">
+                    <div className="login-cancel">
+                    <Link to='/'><GoX size="20px"/></Link>
                     </div>
-                }
+                    <GoOctoface size="40px" className="logo"/>
+                    <h2>Sign in to SM</h2>
+                    
+                    {errMessage &&
+                        <div className="err-msg-container">
+                            {errMessage}
+                        </div>
+                    }
 
-                <form className="login-form" onSubmit={handleSubmit}>
-                    <div>
-                    <label htmlFor='userName'> Username </label> 
-                    <input
-                        className='text-input'
-                        type="text"
-                        htmlFor="userName"
-                        name="userName"
-                        value={credentials.userName}
-                        onChange={e => setCredentials({ ...credentials, userName: e.target.value })}
-                        required
-                    />
-                    </div>
-                    <div>
-                    <label htmlFor="password"> Password </label>
-                    <input 
-                        className='text-input'
-                        type="password" 
-                        name="password"
-                        value={credentials.password}
-                        onChange={e => setCredentials({ ...credentials, password: e.target.value })}
-                        required
-                    />
-                    </div>
-                    <input type="submit" value="Login" className="btn"/>
-                </form>
+                    <form className="login-form" onSubmit={handleSubmit}>
+                        <div>
+                        <label htmlFor='userName'> Username </label> 
+                        <input
+                            className='text-input'
+                            type="text"
+                            htmlFor="userName"
+                            name="userName"
+                            value={credentials.userName}
+                            onChange={e => setCredentials({ ...credentials, userName: e.target.value })}
+                            required
+                        />
+                        </div>
+                        <div>
+                        <label htmlFor="password"> Password </label>
+                        <input 
+                            className='text-input'
+                            type="password" 
+                            name="password"
+                            value={credentials.password}
+                            onChange={e => setCredentials({ ...credentials, password: e.target.value })}
+                            required
+                        />
+                        </div>
+                        <input type="submit" value="Login" className="btn"/>
+                    </form>
                 </div>
-        </div>
+            </div>
+        </>
     )
 }

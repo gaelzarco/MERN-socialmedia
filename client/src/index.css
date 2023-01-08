@@ -18,19 +18,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.main-container {
-  height: 100vh;
-  width: 97vw;
+.layout {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 .main {
-  width: 99vw; 
-  height: 97vh; 
+  width: 100%; 
+  height: 100%; 
 }
 
 .main-static {
   margin: auto;
-  width: 1000px;
+  width: 1200px;
 }
 
 .create-post {
@@ -129,25 +130,22 @@ body {
 }
 
 .feed {
-  position: absolute;
+  position: static;
   width: 600px;
   margin: auto;
-  margin-right: 37.3%;
-  right: 0;
-  left: 0;
   border-right: 1px solid rgb(73, 73, 73);
   border-left: solid 1px rgb(73, 73, 73);
 }
 
 .feed-header {
+  position: sticky;
   display: inline-flex;
   align-items: center;
   top: 0;
-  left: 0;
-  padding-top: 1px;
-  padding-bottom: 10px;
+  /* left: 0; */
+  padding-top: 5px;
+  padding-bottom: 5px;
   padding-left: 20px;
-  position: sticky;
   background-color: rgba(0, 0, 0, 0.699);
   font-size: 12px;
   height: 40px;
@@ -278,11 +276,17 @@ ul li {
   margin-block: 10px;
 }
 
-.side-bar{
+.side-bar-container {
   height: 100%;
   position: fixed;
-  right: 0;
-  width: 37%;
+  margin-left: 900px;
+  top: 0;
+  width: 300px;
+}
+
+.side-bar {
+  list-style-type: none;
+  margin: 20px;
 }
 
 .side-bar h2 {
@@ -306,6 +310,7 @@ ul li {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-block: 5px;
 }
 
 .side-bar-btn {
@@ -319,13 +324,9 @@ ul li {
 }
 
 .nav-container {
-  /* display: inline-flex; */
   position: fixed;
-  margin-left: -200px;
+  height:100%;
   width: 300px;
-  /* position: fixed;
-  top: 0;
-  left: 0; */
 }
 
 .nav {
@@ -374,7 +375,7 @@ span {
   height: 60px;
   text-align: center;
   align-items: center;
-  transition: .2s all;
+  transition: 0.2s all;
 }
 
 .nav-user:hover {
@@ -382,22 +383,21 @@ span {
 }
 
 .nav-user-name-container {
-  display: flex;
-  flex-wrap: wrap;
-  width: 50%;
+  text-align: left;
+  width: 60%;
   margin-left: 10px;
-  padding-right: 25px;
+  padding-right: 20px;
 }
 
 .nav-user-username {
   font-size: 12px;
-  transform: translateY(-80%);
+  transform: translateY(-50%);
 }
 
 .nav-user-name {
   font-family: GT America Extended Bold;
   font-size: 16px;
-  transform: translateY(60%);
+  transform: translateY(20%);
 }
 
 .nav-user-img {
@@ -417,7 +417,6 @@ span {
 
 .landing-footer {
   bottom: 0;
-  left: 0;
   position: fixed;
   display: flex;
   width: 100vw;
@@ -452,7 +451,7 @@ span {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(244, 232, 255, 0.344);
+  background-color: rgba(48, 48, 48, 0.344);
   display: flex;
   align-content: center;
   justify-content: center;
@@ -494,7 +493,7 @@ span {
   left: 0;
   width: 100%;
   height: 100vh;
-  background-color: rgba(244, 232, 255, 0.344);
+  background-color: rgba(48, 48, 48, 0.344);
   display: flex;
   align-content: center;
   justify-content: center;

@@ -1,6 +1,5 @@
 const comment = require('express').Router()
 const db = require('../models')
-const { populate } = require('../models/user')
 const authenticateToken = require('../utils')
 
 comment.get('/:commentId', async(req, res) => {
@@ -20,10 +19,10 @@ comment.get('/:commentId', async(req, res) => {
             path: 'user',
             select: 'firstName lasName userName img'
         }
-})
-    .then(comment => res.status(200).json(comment))
-    .catch(err => console.log(err))
-})
+    })
+        .then(comment => res.status(200).json(comment))
+        .catch(err => console.log(err))
+    })
 
 comment.post('/:postId', authenticateToken, async(req, res) => {
     const { user, ...rest } = req.body
