@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useStateContext } from "../context/StateContext";
 import { CreatePost } from "."
 
-import { IoHeartOutline } from "react-icons/io5"
+import { IoHeart, IoHeartOutline } from "react-icons/io5"
 import { MdComment } from 'react-icons/md';
 
 export default function Feed() {
@@ -13,7 +13,7 @@ export default function Feed() {
         fetch(`/api/posts`)
         .then(res => res.json())
         .then(data => setPosts(data))
-    }, [setPosts])
+    }, [ setPosts ])
     
     return (
         <div className='feed'>
@@ -49,14 +49,16 @@ export default function Feed() {
                                 </div>
                                 <div className='post-icons'>
                                     <span className='like-btn' onClick={() => addLike(post._id, true)}>
-                                        <IoHeartOutline size="18px"/>
+                                    {auth && post.likes.find((like) =>{
+                                        return like === auth.user._id
+                                    }) ? <IoHeart size='23px' color='red' /> : <IoHeartOutline size='23px' /> }
                                     </span>
                                     <span>
                                         {post.likes && post.likes.length}
                                     </span>
                                     <Link to={`/post/${post._id}`}>
                                         <span className='comment-btn'>
-                                            <MdComment size="18px"/>
+                                            <MdComment size="18px" color='gray'/>
                                         </span>
                                     </Link>
                                     <span>

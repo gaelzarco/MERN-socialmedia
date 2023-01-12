@@ -8,7 +8,7 @@ export const StateContext = ({ children }) => {
 
     const [ auth, setAuth ] = useState(null)
     const [ posts, setPosts ] = useState(null)
-    const [ post, setPost ] = useState({})
+    const [ post, setPost ] = useState(null)
 
     const login = (user) => {
         setAuth(user)
@@ -18,12 +18,6 @@ export const StateContext = ({ children }) => {
     const logout = () => {
         setAuth(null)
         localStorage.clear()
-    }
-
-    const fetchPosts = async () => {
-        await fetch(`/api/posts`)
-        .then(res => res.json())
-        .then(data => setPosts(data))
     }
 
     const addLike = async (id, postBool) => {
@@ -43,9 +37,12 @@ export const StateContext = ({ children }) => {
         const data = await res.json()
         console.log(data)
 
-        const newPosts = posts.filter(post => post._id !== data._id)
-        setPosts([{...data}, ...newPosts])
-        setPost(post => post = data)
+        if (posts !== null) {
+            const newPosts = posts.filter(post => post._id !== data._id)
+            await setPosts([{...data}, ...newPosts])
+        }
+        
+        await setPost(state => state = data)
     }
 
     return (
@@ -56,11 +53,10 @@ export const StateContext = ({ children }) => {
             setAuth,
             login,
             logout,
+            setPost,
             setPosts,
             posts,
-            setPost,
             post,
-            fetchPosts,
             addLike,
         }}
         >

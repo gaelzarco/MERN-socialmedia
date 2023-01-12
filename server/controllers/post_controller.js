@@ -28,15 +28,15 @@ post.get('/:id', async (req, res) => {
 })
 
 post.post('/',  authenticateToken, async (req, res) => {
-    console.log(req.body)
-    // const post = await db.Post.create(req.body)
+    // console.log(req.body)
+    const post = await db.Post.create(req.body)
     
-    // if (post) {
-    //     const user = await db.User.findById(req.body.user._id)
-    //     user.posts.push(post)
-    //     await user.save()
-    //     return res.status(200).json({ message: 'Post was successful!' })
-    // } else return res.status(400).json({ messsage: 'Post was not successful!' })
+    if (post) {
+        const user = await db.User.findById(req.body.user._id)
+        user.posts.push(post)
+        await user.save()
+        return res.status(200).json({ message: 'Post was successful!' })
+    } else return res.status(400).json({ messsage: 'Post was not successful!' })
 })
 
 module.exports = post

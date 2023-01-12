@@ -3,7 +3,7 @@ import { useStateContext } from "../context/StateContext";
 
 import { GoFileMedia } from "react-icons/go";
 
-export default function CreateComment({ postId }) {
+export default function CreateComment({ postId, commentId }) {
     const { auth } = useStateContext()
 
     const [ comment, setComment ] = useState({
@@ -17,7 +17,7 @@ export default function CreateComment({ postId }) {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const res = await fetch(`/api/comments/${postId}`, {
+        const res = await fetch(`/api/comments/${postId && commentId  ?  'reply/' + commentId + '/' + postId : postId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,13 +28,15 @@ export default function CreateComment({ postId }) {
 
         const data = await res.json()
 
-        if (res.status === 200) {
+        if (res.status === 200 && ( postId && !commentId )) {
             console.log('Post successful!')
             console.log(data)
-            window.location.reload()
-        } else {
-            console.log('Failed to post')
-        }
+            // window.location.reload()
+        } else if ( res.status === 200 && ( commentId && postId ) ) {
+            console.log('Reply was successful!')
+            console.log(data)
+            // window.location.reload()
+        } else console.log('Something went wrong...')
     }
 
     return (

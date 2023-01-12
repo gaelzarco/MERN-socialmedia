@@ -8,7 +8,7 @@ export default function CreatePost() {
     const [ post, setPost ] = useState({
         user: auth.user,
         body: '',
-        media: null
+        media: ''
     })
     
     const [ imgView, setImgView ] = useState(false)
@@ -17,17 +17,18 @@ export default function CreatePost() {
         e.preventDefault()
         console.log(post)
 
-        let formData = new FormData()
-        formData.append('user', post.user)
-        formData.append('body', post.body)
-        formData.append('media', post.media)
+        // let formData = new FormData()
+        // formData.append('user', post.user)
+        // formData.append('body', post.body)
+        // formData.append('media', post.media)
 
         const res = await fetch('/api/posts', {
             method: 'POST',
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${auth.accessToken}`
             },
-            body: formData
+            body: JSON.stringify(post)
         })
 
         const data = await res.json()
@@ -66,8 +67,8 @@ export default function CreatePost() {
                         className='create-post-img-input'
                         htmlFor='media'
                         name='media'
-                        type='file'
-                        onChange={e => setPost({ ...post, media: e.target.files[0] })}
+                        type='text'
+                        onChange={e => setPost({ ...post, media: e.target.value })}
                         />
                     </div>
                 )}

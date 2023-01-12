@@ -4,22 +4,43 @@ import { useStateContext } from "../context/StateContext";
 import { CreateComment, Comment } from "."
 
 import { IoMdArrowRoundBack } from "react-icons/io"
-import { IoHeartOutline } from "react-icons/io5"
+import { IoHeart, IoHeartOutline } from "react-icons/io5"
 import { GoX } from "react-icons/go"
 
 export default function Post() {
     const { id } = useParams()
-    const { auth, setPost, post, addLike } = useStateContext()
+    const { auth, navigate, setPost, post } = useStateContext()
+
     const [ commentDisplay, setCommentDisplay ] = useState(false)
     const [ comment, setComment ] = useState({})
 
     useEffect(() => {
-        fetch(`/api/posts/${id}`)
-        .then(res => res.json())
-        .then(data => setPost(data))
-    }, [id, setPost])
+       fetch(`/api/posts/${id}`)
+       .then(res => res.json())
+       .then(data => setPost(data))
+    }, [setPost, id])
 
-    console.log(post)
+    // console.log(post)
+
+    const addLike = async (id, postBool) => {
+        if (!auth) {
+            return navigate('/login')
+        }
+
+        const res = await fetch(`/api/like/${postBool === true ? id : 'comment/' + id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.accessToken}`
+            },
+            body: JSON.stringify(auth.user)
+        })
+
+        const data = await res.json()
+        // console.log(data)
+        
+        await setPost((prevState) => prevState = data)
+    }
 
     return (
         <>
@@ -34,17 +55,18 @@ export default function Post() {
                                 {comment !== null && ( <h2>In reply to {post.user.userName}'s post</h2> )}
                             </span>
                         </div>
-                        <Comment comment={comment}/>
+                        <Comment comment={comment} post={comment.post}/>
                     </div>
                 </div>
             )}
+
             <div className="feed">
                 <header className="feed-header">
-                    <Link to='/'><IoMdArrowRoundBack size="20px"/></Link>
+                    <Link onClick={() => navigate(-1)}><IoMdArrowRoundBack size="20px"/></Link>
                     <h2 className="feed-header-h2">Thread</h2>
                 </header>
 
-                {post._id === id && (
+                {post && (
                     <div className="postId-container">
                         <div className="post">
                             <span className='postId-span'>
@@ -65,14 +87,19 @@ export default function Post() {
                             </div>
                             <div className='postId-icons'>
                                 <span className='postId-like-btn' onClick={() => addLike(post._id, true)}>
-                                    <IoHeartOutline size="23px"/>
+                                    {auth && post.likes.find((like) =>{
+                                        return like === auth.user._id
+                                    }) ? <IoHeart size='23px' color='red'/> : <IoHeartOutline size='23px' /> }
                                 </span>
                                 <span>
                                     <p style={{marginBottom: '21px'}}>{post.likes && post.likes.length} Likes</p>
                                 </span>
+                                <span>
+                                    <p style={{marginBottom: '21px'}}>{post.comments.length} replies</p>
+                                </span>
                             </div>
                         </div>
-                        {auth && (
+                        {(auth && post) && (
                                 <div className="postId-create-comment">
                                     <CreateComment postId={id} />
                                 </div>
@@ -80,7 +107,7 @@ export default function Post() {
                     </div>
                 )}
 
-                {post.comments && (
+                {post && (
                     post.comments.map((comment, i) => {
                         return (
                             <div className="post-container" key={i}>
@@ -105,7 +132,9 @@ export default function Post() {
 
                                     <div className='post-icons'>
                                         <span className='post-like-btn' onClick={() => addLike(comment._id)}>
-                                            <IoHeartOutline size="23px"/>
+                                            {auth && comment.likes.find((like) =>{
+                                               return like === auth.user._id
+                                            }) ? <IoHeart size='23px' color='red' /> : <IoHeartOutline size='23px' /> }
                                         </span>
                                         <span>
                                             <p style={{marginBottom: '21px'}}>{comment.likes.length} Likes</p>

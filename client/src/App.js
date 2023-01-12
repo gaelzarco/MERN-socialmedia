@@ -14,6 +14,8 @@ function App() {
     } 
   }, [setAuth, localUser])
 
+  // console.log(auth)
+
   return (
     <>
       <div className="main-static">

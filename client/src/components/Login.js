@@ -4,7 +4,6 @@ import { GoOctoface } from "react-icons/go"
 import { GoX } from "react-icons/go"
 
 import { useStateContext } from "../context/StateContext"
-import Feed from "./Feed"
 
 export default function Login() {
     const { login, navigate } = useStateContext()
@@ -38,8 +37,6 @@ export default function Login() {
 
     return (
         <>
-            <Feed />
-            
             <div className="login-container">
                 <div className="login">
                     <div className="login-cancel">
