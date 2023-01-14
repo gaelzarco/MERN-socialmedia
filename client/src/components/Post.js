@@ -20,7 +20,7 @@ export default function Post() {
        .then(data => setPost(data))
     }, [setPost, id])
 
-    // console.log(post)
+    console.log(post)
 
     const addLike = async (id, postBool) => {
         if (!auth) {
@@ -55,7 +55,7 @@ export default function Post() {
                                 {comment !== null && ( <h2>In reply to {post.user.userName}'s post</h2> )}
                             </span>
                         </div>
-                        <Comment comment={comment} post={comment.post}/>
+                        {commentDisplay === true && <Comment comment={comment} post={comment.post}/>}
                     </div>
                 </div>
             )}

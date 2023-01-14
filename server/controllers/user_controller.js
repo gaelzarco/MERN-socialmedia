@@ -2,6 +2,7 @@ const user = require('express').Router()
 const db = require('../models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const authenticateToken = require('../utils')
 
 require('dotenv').config()
 const TOKEN_SECRET = process.env.TOKEN_SECRET
@@ -10,7 +11,13 @@ const generateAccessToken = (username) => {
     return jwt.sign(username, TOKEN_SECRET, { expiresIn: '3600s' })
 }
 
-user.post('/', async (req, res) => {
+user.get('/', authenticateToken, async (req, res) => {
+    await db.User.find().select('firstName lastName userName img')
+    .then(users => res.status(200).json(users))
+    .catch(err => console.log(err))
+})
+
+user.post('/create', async (req, res) => {
     const { password, ...rest } = req.body
 
     if(!password || !rest) {

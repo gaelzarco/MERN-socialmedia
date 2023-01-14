@@ -14,7 +14,7 @@ function App() {
     } 
   }, [setAuth, localUser])
 
-  // console.log(auth)
+  console.log(auth)
 
   return (
     <>

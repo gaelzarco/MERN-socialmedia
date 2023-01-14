@@ -1,5 +1,7 @@
 const post = require('express').Router()
+const { model } = require('mongoose')
 const db = require('../models')
+const { populate } = require('../models/user')
 const authenticateToken = require('../utils')
 
 post.get('/', async (req, res) => {
@@ -16,12 +18,19 @@ post.get('/:id', async (req, res) => {
     .populate({ 
         path: 'comments',
         populate: {
-            path: 'comments'
-        }, 
+            path: 'comments',
+            populate: {
+                path: 'user',
+                select: 'firstName lasName userName img'
+            }
+        }
+    })
+    .populate({
+        path: 'comments',
         populate: {
             path: 'user',
-            select: 'firstName lastName userName img',
-        },
+            select: 'firstName lasName userName img'
+        }
     })
 
     if (post) return res.status(200).json(post)

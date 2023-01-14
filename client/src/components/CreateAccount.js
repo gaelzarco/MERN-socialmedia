@@ -24,7 +24,7 @@ export default function CreateAccount() {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const res = await fetch('api/user', {
+        const res = await fetch('api/user/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

@@ -5,6 +5,7 @@ import { GoFileMedia } from "react-icons/go";
 
 export default function CreateComment({ postId, commentId }) {
     const { auth } = useStateContext()
+    console.log(commentId)
 
     const [ comment, setComment ] = useState({
         user: auth && auth.user,
@@ -17,7 +18,7 @@ export default function CreateComment({ postId, commentId }) {
     async function handleSubmit(e) {
         e.preventDefault()
 
-        const res = await fetch(`/api/comments/${postId && commentId  ?  'reply/' + commentId + '/' + postId : postId}`, {
+        const res = await fetch(`/api/comments/${postId && commentId !== undefined  ?  'reply/' + commentId + '/' + postId : postId}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -28,14 +29,10 @@ export default function CreateComment({ postId, commentId }) {
 
         const data = await res.json()
 
-        if (res.status === 200 && ( postId && !commentId )) {
-            console.log('Post successful!')
+        if (res.status === 200) {
+            console.log('It worked!')
             console.log(data)
-            // window.location.reload()
-        } else if ( res.status === 200 && ( commentId && postId ) ) {
-            console.log('Reply was successful!')
-            console.log(data)
-            // window.location.reload()
+            window.location.reload()
         } else console.log('Something went wrong...')
     }
 

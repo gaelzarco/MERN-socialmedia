@@ -28,14 +28,6 @@ comment.post('/:postId', authenticateToken, async(req, res) => {
     const { user, ...rest } = req.body
     if (!user) return res.status(400).json({ message: 'Please sign in to post a comment' })
 
-    const newCommentUser = await db.User.findById(user)
-    if (!newCommentUser) return res.status(400).json({ message: 'Not a valid user.' })
-
-    const newComment = await db.Comment.create({ user, post: post, ...rest })
-
-    post.comments.push(newComment)
-    newCommentUser.comments.push(newComment)
-
     const post = await db.Post.findById(req.params.postId)
     .populate('user', 'firstName lastName userName img')
     .populate({ 
@@ -49,6 +41,14 @@ comment.post('/:postId', authenticateToken, async(req, res) => {
         },
     })
     if (!post) return res.status(400).json({ message: 'Something went wrong..' })
+
+    const newCommentUser = await db.User.findById(user)
+    if (!newCommentUser) return res.status(400).json({ message: 'Not a valid user.' })
+
+    const newComment = await db.Comment.create({ user, post, ...rest })
+
+    post.comments.push(newComment)
+    newCommentUser.comments.push(newComment)
 
     await post.save()
     await newCommentUser.save()

@@ -15,6 +15,8 @@ export default function Feed() {
         .then(data => setPosts(data))
     }, [ setPosts ])
     
+    console.log(posts)
+
     return (
         <div className='feed'>
             {auth && (

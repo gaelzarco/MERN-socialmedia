@@ -288,6 +288,37 @@ ul li {
   width: 300px;
 }
 
+.side-bar-follow-container {
+  height: 300px;
+  width: 250px;
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(13,13,13,1) 43%, rgba(40,40,40,1) 100%);
+  padding: 8px;
+  border-radius: 25px;
+}
+
+.side-bar-follow-container h3 {
+  margin-left: 10px;
+}
+
+.side-bar-follow {
+  margin-left: 5px;
+  display: flex;
+  height: 70px;
+  align-items: center;
+  padding-bottom: 10px;
+}
+
+.side-bar-follow-user {
+  margin-left: 15px;
+}
+
+.side-bar-follow p {
+  color: rgb(68, 68, 68);
+}
+.side-bar-follow-user p {
+  margin-top: -20px;
+}
+
 .side-bar {
   list-style-type: none;
   margin: 20px;
@@ -375,6 +406,7 @@ span {
   padding: 8px;
   display: flex;
   border-radius: 100px;
+  background: linear-gradient(90deg, rgba(40,40,40,1) 0%, rgba(13,13,13,1) 43%, rgba(0,0,0,1) 100%);
   width: 250px;
   height: 60px;
   text-align: center;
