@@ -498,9 +498,11 @@ span {
 
 .commentId {
   margin: auto;
+  overflow-x: hidden;
+  overflow-y: auto;
   background-color: black;
   border-radius: 20px;
-  height: auto;
+  height: 800px;
   width: 600px;
   transition: ease-in-out 2s;
 }
