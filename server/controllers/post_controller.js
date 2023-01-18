@@ -1,8 +1,10 @@
 const post = require('express').Router()
-const { model } = require('mongoose')
+const fs = require('fs')
+const multer = require('multer')
 const db = require('../models')
-const { populate } = require('../models/user')
 const authenticateToken = require('../utils')
+
+const upload = multer({ dest: 'uploads/' })
 
 post.get('/', async (req, res) => {
     db.Post.find().populate('user', 'firstName lastName userName img')
@@ -33,19 +35,36 @@ post.get('/:id', async (req, res) => {
         }
     })
 
-    if (post) return res.status(200).json(post)
+    if (post) {
+        console.log(post)
+        return res.status(200).json(post)
+    }
 })
 
-post.post('/',  authenticateToken, async (req, res) => {
-    // console.log(req.body)
-    const post = await db.Post.create(req.body)
-    
-    if (post) {
-        const user = await db.User.findById(req.body.user._id)
-        user.posts.push(post)
-        await user.save()
-        return res.status(200).json({ message: 'Post was successful!' })
-    } else return res.status(400).json({ messsage: 'Post was not successful!' })
+post.post('/',  upload.single('media'), async (req, res) => {
+   try {
+    const user = await db.User.findById(req.body.user)
+    if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })
+
+    const newImage = ({
+        data: fs.readFileSync(req.file.path),
+        contentType: 'image/png'
+    })
+
+    console.log(newImage)
+
+    const post = await db.Post.create({ ...req.body, media: newImage.data })
+
+    user.posts.push(post)
+    await user.save()
+    return res.status(200).json({ message: 'Post was successful!' })
+
+   } catch (err) {
+
+    console.log(err)
+    return res.status(400).json({ 'message': `Something went wrong: ${err}` })
+
+   }
 })
 
 module.exports = post

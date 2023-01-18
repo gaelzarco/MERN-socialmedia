@@ -10,8 +10,14 @@ export const StateContext = ({ children }) => {
     const [ posts, setPosts ] = useState(null)
     const [ post, setPost ] = useState(null)
 
+    const expirationTime = 7200
+
+    const setTokenTimestamp = () => localStorage.setItem('token_timestamp', Date.now())
+    const getTokenTimestamp = () => localStorage.getItem('token_timestamp')
+
     const login = (user) => {
         setAuth(user)
+        setTokenTimestamp()
         localStorage.setItem('user', JSON.stringify(user))
     }
 
@@ -51,6 +57,8 @@ export const StateContext = ({ children }) => {
             navigate,
             auth,
             setAuth,
+            getTokenTimestamp,
+            expirationTime,
             login,
             logout,
             setPost,

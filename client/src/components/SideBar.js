@@ -12,20 +12,6 @@ export default function SideBar() {
         borderRadius: '100px'
     }
 
-    // const fetchUsers = async () => {
-    //     const res = await fetch(`/api/user/`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${auth.accessToken}`
-    //         },
-    //     })
-
-    //     const data = await res.json()
-
-    //     setUsers(data)
-    // }
-
     useEffect(() => {
         if (auth) {
             fetch(`/api/user/`, {
@@ -40,7 +26,7 @@ export default function SideBar() {
         }
     }, [auth])
 
-    console.log(users)
+    // console.log(users)
 
     return (
         <div className="side-bar-container">

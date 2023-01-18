@@ -7,7 +7,9 @@ const postSchema = new Schema({
         ref: 'User',
         required: true
     },
-    media: String,
+    media: {
+        type: Buffer,
+    },
     body: {
         type: String,
         required: true,

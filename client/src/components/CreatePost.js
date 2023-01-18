@@ -6,7 +6,7 @@ export default function CreatePost() {
     const { auth } = useStateContext()
 
     const [ post, setPost ] = useState({
-        user: auth.user,
+        user: auth.user._id,
         body: '',
         media: ''
     })
@@ -15,20 +15,20 @@ export default function CreatePost() {
 
     async function handleSubmit(e) {
         e.preventDefault()
-        console.log(post)
 
-        // let formData = new FormData()
-        // formData.append('user', post.user)
-        // formData.append('body', post.body)
-        // formData.append('media', post.media)
+        let formData = new FormData()
+        formData.append('user', post.user)
+        formData.append('body', post.body)
+        formData.append('media', post.media, post.media.name)
+
+        console.log(formData)
 
         const res = await fetch('/api/posts', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
                 'Authorization' : `Bearer ${auth.accessToken}`
             },
-            body: JSON.stringify(post)
+            body: formData
         })
 
         const data = await res.json()
@@ -44,7 +44,7 @@ export default function CreatePost() {
 
     return (
         <div className="create-post">
-           <form onSubmit={handleSubmit} autoComplete='off'>
+           <form onSubmit={handleSubmit} autoComplete='off' encType="multipart/form-data">
                 <div className="create-post-content">
                         <img className="create-post-user-img" src={auth.user.img} alt='User'/>
                         <div className="create-post-input-div">
@@ -67,8 +67,10 @@ export default function CreatePost() {
                         className='create-post-img-input'
                         htmlFor='media'
                         name='media'
-                        type='text'
-                        onChange={e => setPost({ ...post, media: e.target.value })}
+                        type='file'
+                        onChange={e => {
+                            setPost({ ...post, media: e.target.files[0] })
+                        }}
                         />
                     </div>
                 )}

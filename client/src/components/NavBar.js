@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { useStateContext } from "../context/StateContext"
 
 import { GoOctoface, GoKebabHorizontal, GoHome } from "react-icons/go"
+import { CgProfile } from "react-icons/cg"
 import { FaSlackHash } from "react-icons/fa"
 
 export default function NavBar() {
@@ -18,11 +19,18 @@ export default function NavBar() {
                 </div>
 
                     {auth ? (
-                        <Link to='/'>
-                            <button className="nav-item-btn">
-                                <GoHome size="30px"/> <span>Home</span>
-                            </button>
-                        </Link>
+                        <>
+                            <Link to='/'>
+                                <button className="nav-item-btn">
+                                    <GoHome size="30px"/> <span>Home</span>
+                                </button>
+                            </Link>
+                            <Link to='/profile'>
+                                <button className="nav-item-btn">
+                                    <CgProfile size="30px" /> <span>Profile</span>
+                                </button>
+                            </Link>
+                        </>
                     ) : (
                         <Link to='/'>
                             <button className="nav-item-btn">

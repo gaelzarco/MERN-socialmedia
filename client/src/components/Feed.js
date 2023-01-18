@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom';
+import { Buffer } from 'buffer'
 import { useStateContext } from "../context/StateContext";
 import { CreatePost } from "."
 
@@ -14,7 +15,7 @@ export default function Feed() {
         .then(res => res.json())
         .then(data => setPosts(data))
     }, [ setPosts ])
-    
+
     console.log(posts)
 
     return (
@@ -43,9 +44,11 @@ export default function Feed() {
                                 )}
                                 <div className='post-body' onClick={() => navigate(`/post/${post._id}`)}>
                                     {post.body}
-                                    {post.media && (
+                                    {post.media.data.length > 0 && (
                                         <div className='post-media'>
-                                        <img className='post-img' src={post.media} alt='Post-media'/> 
+                                        <img className='post-img' src={
+                                            `data:${post.media.type};base64,${Buffer.from(post.media.data).toString('base64')}`
+                                        } alt='Post-media'/> 
                                         </div>
                                     )}
                                 </div>
