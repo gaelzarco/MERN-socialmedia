@@ -2,7 +2,7 @@ const comment = require('express').Router()
 const db = require('../models')
 const authenticateToken = require('../utils')
 
-comment.get('/:commentId', async(req, res) => {
+comment.get('/:commentId', async (req, res) => {
     const commentId = req.params.commentId
     db.Comment.findById(commentId)
     .populate('user', 'firstName lastName userName img')
@@ -24,7 +24,8 @@ comment.get('/:commentId', async(req, res) => {
         .catch(err => console.log(err))
     })
 
-comment.post('/:postId', authenticateToken, async(req, res) => {
+comment.post('/:postId', authenticateToken, async (req, res) => {
+    console.log(req.body)
     const { user, ...rest } = req.body
     if (!user) return res.status(400).json({ message: 'Please sign in to post a comment' })
 

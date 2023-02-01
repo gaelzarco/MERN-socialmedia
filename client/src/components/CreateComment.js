@@ -9,6 +9,7 @@ export default function CreateComment({ postId, commentId }) {
 
     const [ comment, setComment ] = useState({
         user: auth && auth.user,
+        post: postId,
         body: '',
         media: '',
     })

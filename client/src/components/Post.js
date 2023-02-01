@@ -6,6 +6,7 @@ import { CreateComment, Comment } from "."
 import { IoMdArrowRoundBack } from "react-icons/io"
 import { IoHeart, IoHeartOutline } from "react-icons/io5"
 import { GoX } from "react-icons/go"
+import { Buffer } from 'buffer'
 
 export default function Post() {
     const { id } = useParams()
@@ -37,8 +38,10 @@ export default function Post() {
         })
 
         const data = await res.json()
-        // console.log(data)
-        
+
+        if (res.status !== 200) {
+            console.log('something went wrong')
+        }
         await setPost((prevState) => prevState = data)
     }
 
@@ -81,7 +84,9 @@ export default function Post() {
                                 {post.body}
                                 {post.media && (
                                     <div className='postId-media'>
-                                        <img className='post-img' src={post.media} alt='Post-media'/> 
+                                        <img className='post-img' src={
+                                            `data:${post.media.type};base64,${Buffer.from(post.media.data).toString('base64')}`
+                                        } alt='Post-media'/> 
                                     </div>
                                 )}
                             </div>
@@ -130,7 +135,7 @@ export default function Post() {
                                             )}
                                     </div>
 
-                                    <div className='post-icons'>
+                                    <div className='postId-icons'>
                                         <span className='post-like-btn' onClick={() => addLike(comment._id)}>
                                             {auth && comment.likes.find((like) =>{
                                                return like === auth.user._id
@@ -138,6 +143,9 @@ export default function Post() {
                                         </span>
                                         <span>
                                             <p style={{marginBottom: '21px'}}>{comment.likes.length} Likes</p>
+                                        </span>
+                                        <span>
+                                            <p style={{marginBottom: '21px'}}>{comment.comments.length} replies</p>
                                         </span>
                                     </div>
                                 </div>

@@ -36,12 +36,11 @@ post.get('/:id', async (req, res) => {
     })
 
     if (post) {
-        console.log(post)
         return res.status(200).json(post)
     }
 })
 
-post.post('/',  upload.single('media'), async (req, res) => {
+post.post('/', upload.single('media'), async (req, res) => {
    try {
     const user = await db.User.findById(req.body.user)
     if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })
@@ -50,8 +49,6 @@ post.post('/',  upload.single('media'), async (req, res) => {
         data: fs.readFileSync(req.file.path),
         contentType: 'image/png'
     })
-
-    console.log(newImage)
 
     const post = await db.Post.create({ ...req.body, media: newImage.data })
 

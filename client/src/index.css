@@ -1,26 +1,12 @@
-@font-face {
-  font-family: Hero;
-  src: url("./fonts/Hero-Regular.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: Hero Bold;
-  src: url("./fonts/Hero-Bold.ttf") format("truetype");
-}
-
-@font-face {
-  font-family: Hero Light;
-  src: url("./fonts/Hero-Light.ttf") format("truetype");
-}
-
 body {
-  margin: 0;
+  font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+  'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  sans-serif;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
   padding: 0;
   color: white;
   background-color: black;
-  font-family: Hero;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .layout {
