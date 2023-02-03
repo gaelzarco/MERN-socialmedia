@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Buffer } from 'buffer'
 import { useStateContext } from "../context/StateContext";
@@ -8,7 +8,9 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5"
 import { MdComment } from 'react-icons/md';
 
 export default function Feed() {
-    const { auth, navigate, setPosts, posts, addLike } = useStateContext()
+    const { auth, navigate  } = useStateContext()
+
+    const [ posts, setPosts ] = useState(null)
 
     useEffect(() => {
         fetch(`/api/posts`)
@@ -17,6 +19,29 @@ export default function Feed() {
     }, [ setPosts ])
 
     console.log(posts)
+
+    const addLike = async (id) => {
+        if (!auth) {
+            return navigate('/login')
+        }
+
+        const res = await fetch(`/api/like/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.accessToken}`
+            },
+            body: JSON.stringify(auth.user)
+        })
+
+        const data = await res.json()
+        console.log(data)
+
+        if (posts !== null) {
+            const newPosts = posts.filter(post => post._id !== data._id)
+            await setPosts([{...data}, ...newPosts])
+        }
+    }
 
     return (
         <div className='feed'>
@@ -53,7 +78,7 @@ export default function Feed() {
                                     )}
                                 </div>
                                 <div className='post-icons'>
-                                    <span className='like-btn' onClick={() => addLike(post._id, true)}>
+                                    <span className='like-btn' onClick={() => addLike(post._id)}>
                                     {auth && post.likes.find((like) =>{
                                         return like === auth.user._id
                                     }) ? <IoHeart size='23px' color='red' /> : <IoHeartOutline size='23px' /> }

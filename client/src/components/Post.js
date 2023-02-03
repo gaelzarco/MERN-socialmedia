@@ -10,16 +10,17 @@ import { Buffer } from 'buffer'
 
 export default function Post() {
     const { id } = useParams()
-    const { auth, navigate, setPost, post } = useStateContext()
+    const { auth, navigate } = useStateContext()
 
     const [ commentDisplay, setCommentDisplay ] = useState(false)
     const [ comment, setComment ] = useState({})
+    const [ post, setPost ] = useState(null)
 
     useEffect(() => {
        fetch(`/api/posts/${id}`)
        .then(res => res.json())
        .then(data => setPost(data))
-    }, [setPost, id])
+    }, [ id ])
 
     console.log(post)
 

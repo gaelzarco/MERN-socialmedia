@@ -40,7 +40,8 @@ post.get('/:id', async (req, res) => {
     }
 })
 
-post.post('/', upload.single('media'), async (req, res) => {
+post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
+    console.log('route being hit')
    try {
     const user = await db.User.findById(req.body.user)
     if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })

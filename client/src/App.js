@@ -17,7 +17,7 @@ function App() {
     } else if (localUser) {
       setAuth(JSON.parse(localUser))
     }
-  }, [ localUser, setAuth, expirationTime])
+  }, [ localUser, setAuth, expirationTime ])
 
   console.log(auth)
 
