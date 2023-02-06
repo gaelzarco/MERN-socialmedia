@@ -56,7 +56,7 @@ export default function Feed() {
             )}
 
             <div>
-                {posts && posts.length > 0 && (posts.map((post, i) => {
+                {(posts && posts.length > 0) && (posts.map((post, i) => {
                     return (
                         <div className='post-container'key={i}>
                             <div className='post'>

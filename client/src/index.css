@@ -50,7 +50,7 @@ body {
 }
 
 .create-post-input {
-  font-family: Hero;
+  font-family: ui-sans-serif;
   font-size: 20px;
   background-color: rgba(0, 0, 0, 0);
   color: white;
@@ -70,7 +70,7 @@ body {
 
 .create-post-img-input {
   width: 400px;
-  font-family: Hero;
+  font-family: ui-sans-serif;
   background-color: rgba(0, 0, 0, 0);
   color: white;
   border: none;
@@ -90,7 +90,8 @@ body {
 
 .create-post-btn {
   background-color: rgb(184, 108, 255);
-  font-family: Hero Light;
+  font-family: ui-sans-serif;
+  font-weight: 300;
   padding-top: 5px;
   padding-bottom: 5px;
   width: 80px;
@@ -241,7 +242,8 @@ body {
 }
 
 a {
-  font-family: Hero Bold;
+  font-family: ui-sans-serif;
+  font-weight: bold;
   text-decoration: none;
   color: white;
 }
@@ -256,7 +258,7 @@ ul li {
 
 .text-input {
   text-align: center;
-  font-family: Hero;
+  font-family: ui-sans-serif;
   background-color: rgb(83, 83, 83);
   color: white;
   border: none;
@@ -311,7 +313,8 @@ ul li {
 }
 
 .side-bar h2 {
-  font-family: Hero Bold;
+  font-family: ui-sans-serif;
+  font-weight: bold;
 }
 
 .side-bar p {
@@ -335,7 +338,8 @@ ul li {
 }
 
 .side-bar-btn {
-  font-family: Hero Bold;
+  font-family: ui-sans-serif;
+  font-weight: bold;
   border: none;
   border-radius: 16px;
   padding: 5px;
@@ -364,7 +368,8 @@ ul li {
   border-radius: 100px;
   text-align: left;
   background-color: black;
-  font-family: Hero Bold;
+  font-family: ui-sans-serif;
+  font-weight: bold;
   color: white;
   width: 200px;
   transition: all 0.2s;
@@ -417,7 +422,8 @@ span {
 }
 
 .nav-user-name {
-  font-family: Hero Bold;
+  font-family: ui-sans-serif;
+  font-weight: bold;
   font-size: 16px;
   transform: translateY(20%);
 }
@@ -457,7 +463,8 @@ span {
 .landing-footer-btn {
   margin-inline: 5px;
   position: relative;
-  font-family: Hero Bold;
+  font-family: ui-sans-serif;
+  font-weight: bold;
   vertical-align: middle;
   width: 100px;
   height: 30px;
@@ -576,7 +583,8 @@ span {
   border-radius: 100px;
   padding: 10px;
   width: 180px;
-  font-family: Hero Light;
+  font-family: ui-sans-serif;
+  font-weight: lighter;
   transition: all .1s;
   cursor: pointer;
 }
