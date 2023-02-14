@@ -7,6 +7,36 @@ export const StateContext = ({ children }) => {
     const navigate = useNavigate()
 
     const [ auth, setAuth ] = useState(null)
+    const [ posts, setPosts ] = useState(null)
+
+    const fetchPosts = () => {
+        fetch(`/api/posts`)
+        .then(res => res.json())
+        .then(data => setPosts(data))
+    }
+
+    const addLike = async (id) => {
+        if (!auth) {
+            return navigate('/login')
+        }
+
+        const res = await fetch(`/api/like/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${auth.accessToken}`
+            },
+            body: JSON.stringify(auth.user)
+        })
+
+        const data = await res.json()
+        console.log(data)
+
+        if (posts !== null) {
+            const newPosts = posts.filter(post => post._id !== data._id)
+            await setPosts([{...data}, ...newPosts])
+        }
+    }
 
     const expirationTime = 7200
 
@@ -29,6 +59,9 @@ export const StateContext = ({ children }) => {
         value={{
             navigate,
             auth,
+            fetchPosts,
+            posts,
+            addLike,
             setAuth,
             getTokenTimestamp,
             expirationTime,

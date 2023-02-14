@@ -128,12 +128,25 @@ body {
   border-left: solid 1px rgb(73, 73, 73);
 }
 
+.profile-header h2,
+.profile-header h4 {
+  padding-left: 35px;
+}
+
+.profile-header h2 {
+  font-size: 22px;
+}
+
+.profile-header h4 {
+  color: rgb(139, 139, 139);
+}
+
 .feed-header {
   position: sticky;
   display: inline-flex;
+  line-height: 4px;
   align-items: center;
   top: 0;
-  /* left: 0; */
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
@@ -279,7 +292,6 @@ ul li {
 .side-bar-follow-container {
   height: 300px;
   width: 250px;
-  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(13,13,13,1) 43%, rgba(40,40,40,1) 100%);
   padding: 8px;
   border-radius: 25px;
 }
@@ -397,7 +409,6 @@ span {
   padding: 8px;
   display: flex;
   border-radius: 100px;
-  background: linear-gradient(90deg, rgba(40,40,40,1) 0%, rgba(13,13,13,1) 43%, rgba(0,0,0,1) 100%);
   width: 250px;
   height: 60px;
   text-align: center;

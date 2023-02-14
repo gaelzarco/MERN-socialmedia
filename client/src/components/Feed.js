@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import { Link } from 'react-router-dom';
 import { Buffer } from 'buffer'
 import { useStateContext } from "../context/StateContext";
@@ -8,40 +8,13 @@ import { IoHeart, IoHeartOutline } from "react-icons/io5"
 import { MdComment } from 'react-icons/md';
 
 export default function Feed() {
-    const { auth, navigate  } = useStateContext()
-
-    const [ posts, setPosts ] = useState(null)
+    const { auth, navigate, fetchPosts, posts, addLike } = useStateContext()
 
     useEffect(() => {
-        fetch(`/api/posts`)
-        .then(res => res.json())
-        .then(data => setPosts(data))
-    }, [ setPosts ])
+        fetchPosts()
+    }, [])
 
     console.log(posts)
-
-    const addLike = async (id) => {
-        if (!auth) {
-            return navigate('/login')
-        }
-
-        const res = await fetch(`/api/like/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${auth.accessToken}`
-            },
-            body: JSON.stringify(auth.user)
-        })
-
-        const data = await res.json()
-        console.log(data)
-
-        if (posts !== null) {
-            const newPosts = posts.filter(post => post._id !== data._id)
-            await setPosts([{...data}, ...newPosts])
-        }
-    }
 
     return (
         <div className='feed'>

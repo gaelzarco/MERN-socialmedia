@@ -13,7 +13,12 @@ export default function Profile() {
                 <IoMdArrowRoundBack size='20px' onClick={() => navigate(-1)}/>
                 <div className="profile-header">
                     <h2>{auth.user.userName}</h2>
+                    <h4>{auth.user.posts.length} Posts</h4>
                 </div>
+            </div>
+
+            <div>
+                
             </div>
         </div>
     )
