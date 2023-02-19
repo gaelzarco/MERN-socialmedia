@@ -46,12 +46,16 @@ post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
     const user = await db.User.findById(req.body.user)
     if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })
 
-    const newImage = ({
-        data: fs.readFileSync(req.file.path),
-        contentType: 'image/png'
-    })
+    let newImage;
 
-    const post = await db.Post.create({ ...req.body, media: newImage.data })
+    if (req.body.media) {
+        newImage = {
+            data: fs.readFileSync(req.file.path),
+            contentType: 'image/png'
+        }
+    }
+
+    const post = await db.Post.create({ ...req.body, media: newImage !== undefined ? newImage.data : null  })
 
     user.posts.push(post)
     await user.save()

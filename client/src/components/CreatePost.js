@@ -19,7 +19,9 @@ export default function CreatePost() {
         let formData = new FormData()
         formData.append('user', post.user)
         formData.append('body', post.body)
-        formData.append('media', post.media, post.media.name)
+        if (typeof post.media !== "string") {
+            formData.append('media', post.media, post.media.name)
+        }
 
         console.log(formData)
 
