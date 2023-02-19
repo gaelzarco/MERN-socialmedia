@@ -24,5 +24,5 @@ Developed using the following technologies
 
 ## Demo
 
-Click the link to view a demonstration
-![](https://readmeimg.s3.us-west-2.amazonaws.com/socialmedapp+-+Made+with+Clipchamp.mp4)
+Click the link to view a demonstration!
+https://readmeimg.s3.us-west-2.amazonaws.com/socialmedapp+-+Made+with+Clipchamp.mp4
