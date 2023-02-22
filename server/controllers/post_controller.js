@@ -4,6 +4,7 @@ const multer = require('multer')
 const db = require('../models')
 const authenticateToken = require('../utils')
 
+const { uploadFile } = require('../utils/s3')
 const upload = multer({ dest: 'uploads/' })
 
 post.get('/', async (req, res) => {
@@ -46,16 +47,12 @@ post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
     const user = await db.User.findById(req.body.user)
     if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })
 
-    let newImage;
-
     if (req.file) {
-        newImage = {
-            data: fs.readFileSync(req.file.path),
-            contentType: 'image/png'
-        }
+        const result = await uploadFile(req.file)
+        console.log(result)
     }
 
-    const post = await db.Post.create({ ...req.body, media: newImage !== undefined ? newImage.data : null  })
+    const post = await db.Post.create({ ...req.body  })
 
     user.posts.push(post)
     await user.save()

@@ -42,7 +42,7 @@ export default function Feed() {
                                 )}
                                 <div className='post-body' onClick={() => navigate(`/post/${post._id}`)}>
                                     {post.body}
-                                    {(post.media !== null && post.media.data.length > 0) && (
+                                    {(post.media !== null && post.media !== undefined) && (
                                         <div className='post-media'>
                                         <img className='post-img' src={
                                             `data:${post.media.type};base64,${Buffer.from(post.media.data).toString('base64')}`
