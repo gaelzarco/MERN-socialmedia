@@ -48,7 +48,7 @@ post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
 
     let newImage;
 
-    if (req.body.media) {
+    if (req.file) {
         newImage = {
             data: fs.readFileSync(req.file.path),
             contentType: 'image/png'

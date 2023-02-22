@@ -6,7 +6,7 @@ body {
 -moz-osx-font-smoothing: grayscale;
   padding: 0;
   color: white;
-  background-color: black;
+  background-color: rgb(15, 15, 15);
 }
 
 .layout {
@@ -150,7 +150,7 @@ body {
   padding-top: 5px;
   padding-bottom: 5px;
   padding-left: 20px;
-  background-color: rgba(0, 0, 0, 0.699);
+  background-color: rgba(17, 17, 17, 0.342);
   font-size: 12px;
   height: 40px;
   width: 580px;
