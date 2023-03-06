@@ -5,6 +5,6 @@ export default function ProtectedRoutes() {
     const { auth } = useStateContext()
 
     return (
-        auth ? <Outlet /> : <Navigate to='/'/>
+        auth !== null ? <Outlet /> : <Navigate to='/'/>
     )
 }

@@ -81,7 +81,7 @@ export default function CreatePost() {
                     <div className='create-post-img-btn' onClick={() => setImgView(!imgView)}>
                         <GoFileMedia color="rgb(184, 108, 255)" size='20px'/>
                     </div>
-                    <button className="create-post-btn" tybe='submit'>Post</button>
+                    <button className="create-post-btn" type='submit'>Post</button>
                 </div>
            </form>
         </div>

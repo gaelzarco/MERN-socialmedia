@@ -1,6 +1,5 @@
 import { useEffect} from 'react'
 import { Link } from 'react-router-dom';
-import { Buffer } from 'buffer'
 import { useStateContext } from "../context/StateContext";
 import { CreatePost } from "."
 
@@ -44,15 +43,13 @@ export default function Feed() {
                                     {post.body}
                                     {(post.media !== null && post.media !== undefined) && (
                                         <div className='post-media'>
-                                        <img className='post-img' src={
-                                            `data:${post.media.type};base64,${Buffer.from(post.media.data).toString('base64')}`
-                                        } alt='Post-media'/> 
+                                        <img className='post-img' src={post.media} alt='Post-media'/> 
                                         </div>
                                     )}
                                 </div>
                                 <div className='post-icons'>
                                     <span className='like-btn' onClick={() => addLike(post._id)}>
-                                    {auth && post.likes.find((like) =>{
+                                    {(auth && post.likes) && post.likes.find((like) =>{
                                         return like === auth.user._id
                                     }) ? <IoHeart size='23px' color='red' /> : <IoHeartOutline size='23px' /> }
                                     </span>

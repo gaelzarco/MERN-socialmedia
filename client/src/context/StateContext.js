@@ -10,9 +10,10 @@ export const StateContext = ({ children }) => {
     const [ posts, setPosts ] = useState(null)
 
     const fetchPosts = () => {
-        fetch(`/api/posts`)
+        fetch(`/api/posts/`)
         .then(res => res.json())
         .then(data => setPosts(data))
+        console.log(posts)
     }
 
     const addLike = async (id) => {

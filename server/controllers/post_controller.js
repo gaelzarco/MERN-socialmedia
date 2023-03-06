@@ -1,16 +1,25 @@
 const post = require('express').Router()
-const fs = require('fs')
 const multer = require('multer')
 const db = require('../models')
 const authenticateToken = require('../utils')
 
-const { uploadFile } = require('../utils/s3')
-const upload = multer({ dest: 'uploads/' })
+const { uploadFile, getFile } = require('../utils/s3')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 post.get('/', async (req, res) => {
-    db.Post.find().populate('user', 'firstName lastName userName img')
-    .then(posts => res.status(200).json(posts))
-    .catch(err => console.log(err))
+    const posts = await db.Post.find().populate('user', 'firstName lastName userName img')
+
+    const postsWithUrls = await Promise.all(posts.map(async (post) => {
+            if (post.media) {
+                const signedUrl = await getFile(post.media)
+                post.media = signedUrl
+                return post
+            }
+            return post
+        }))
+
+        res.status(200).json(postsWithUrls)
 })
 
 post.get('/:id', async (req, res) => {
@@ -37,33 +46,32 @@ post.get('/:id', async (req, res) => {
     })
 
     if (post) {
-        return res.status(200).json(post)
+        res.status(200).json(post)
     }
 })
 
 post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
-    console.log('route being hit')
-   try {
+    console.log('Route being pinged')
     const user = await db.User.findById(req.body.user)
     if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })
 
     if (req.file) {
-        const result = await uploadFile(req.file)
-        console.log(result)
+        const { file } = req
+        const fileName = await uploadFile(file)
+    
+        const post = await db.Post.create({ ...req.body, media: fileName })
+
+        user.posts.push(post)
+        await user.save()
+        res.status(200).json({ message: 'Post was successful!' })
+    } else {
+        const post = await db.Post.create({ ...req.body  })
+        console.log('post: ' + post)
+
+        user.posts.push(post)
+        await user.save()
+        res.status(200).json({ message: 'Post was successful!' })
     }
-
-    const post = await db.Post.create({ ...req.body  })
-
-    user.posts.push(post)
-    await user.save()
-    return res.status(200).json({ message: 'Post was successful!' })
-
-   } catch (err) {
-
-    console.log(err)
-    return res.status(400).json({ 'message': `Something went wrong: ${err}` })
-
-   }
 })
 
 module.exports = post
