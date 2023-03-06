@@ -33,7 +33,7 @@ post.get('/:id', async (req, res) => {
             path: 'comments',
             populate: {
                 path: 'user',
-                select: 'firstName lasName userName img'
+                select: 'firstName lastName userName img'
             }
         }
     })
@@ -41,7 +41,7 @@ post.get('/:id', async (req, res) => {
         path: 'comments',
         populate: {
             path: 'user',
-            select: 'firstName lasName userName img'
+            select: 'firstName lastName userName img'
         }
     })
 

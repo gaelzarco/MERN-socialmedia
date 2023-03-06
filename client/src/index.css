@@ -4,6 +4,7 @@ body {
   sans-serif;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
+  margin: 0;
   padding: 0;
   color: white;
   background-color: rgb(15, 15, 15);
@@ -57,6 +58,34 @@ body {
   width: 450px;
   height: 40px;
   border: none;
+}
+
+.dropzone {
+  border: 2px dashed rgb(73, 73, 73);
+}
+
+:is(.dropzone, .uploads) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 400px;
+  padding: 20px;
+  line-height: 0px;
+}
+
+:is(.dropzone button, .uploads button) {
+  margin-top: 12px;
+  font-family: ui-sans-serif;
+  font-weight: bold;
+  border: none;
+  border-radius: 16px;
+  padding: 5px;
+  height: 35px;
+  display: block;
+  width: 280px;
+
 }
 
 .create-post-input:focus{

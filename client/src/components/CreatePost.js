@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useStateContext } from "../context/StateContext"
+import  { DragDrop }  from '.'
 import { GoFileMedia } from "react-icons/go"
 
 export default function CreatePost() {
@@ -12,6 +13,10 @@ export default function CreatePost() {
     })
     
     const [ imgView, setImgView ] = useState(false)
+
+    const imgState = (file) => {
+        setPost({ ...post, media: file })
+    }
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -65,7 +70,7 @@ export default function CreatePost() {
                 
                 {imgView && (
                     <div className='create-post-img'>
-                        <input 
+                        {/* <input 
                         className='create-post-img-input'
                         htmlFor='media'
                         name='media'
@@ -73,7 +78,8 @@ export default function CreatePost() {
                         onChange={e => {
                             setPost({ ...post, media: e.target.files[0] })
                         }}
-                        />
+                        /> */}
+                        <DragDrop changeState={imgState}/>
                     </div>
                 )}
 

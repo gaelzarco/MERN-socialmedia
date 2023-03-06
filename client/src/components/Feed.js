@@ -11,7 +11,7 @@ export default function Feed() {
 
     useEffect(() => {
         posts === null && fetchPosts()
-    }, [])
+    }, [posts, fetchPosts, addLike])
 
     console.log(posts)
 
@@ -49,9 +49,8 @@ export default function Feed() {
                                 </div>
                                 <div className='post-icons'>
                                     <span className='like-btn' onClick={() => addLike(post._id)}>
-                                    {(auth && post.likes) && post.likes.find((like) =>{
-                                        return like === auth.user._id
-                                    }) ? <IoHeart size='23px' color='red' /> : <IoHeartOutline size='23px' /> }
+                                    {(auth !== null && post.likes.find(like => like === auth.user._id))
+                                      ? <IoHeart size='23px' color='red' /> : <IoHeartOutline size='23px' /> }
                                     </span>
                                     <span>
                                         {post.likes && post.likes.length}
