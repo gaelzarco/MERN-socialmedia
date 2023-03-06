@@ -22,13 +22,12 @@ export default function CreatePost() {
         e.preventDefault()
 
         let formData = new FormData()
-        formData.append('user', post.user)
-        formData.append('body', post.body)
+        for (let [ key, value ] in Object.entries(post)) {
+            formData.append(`${key}`, value)
+        }
         if (typeof post.media !== "string") {
             formData.append('media', post.media, post.media.name)
         }
-
-        console.log(formData)
 
         const res = await fetch('/api/posts', {
             method: 'POST',
@@ -70,15 +69,6 @@ export default function CreatePost() {
                 
                 {imgView && (
                     <div className='create-post-img'>
-                        {/* <input 
-                        className='create-post-img-input'
-                        htmlFor='media'
-                        name='media'
-                        type='file'
-                        onChange={e => {
-                            setPost({ ...post, media: e.target.files[0] })
-                        }}
-                        /> */}
                         <DragDrop changeState={imgState}/>
                     </div>
                 )}

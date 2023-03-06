@@ -11,6 +11,9 @@ post.get('/', async (req, res) => {
     const posts = await db.Post.find().populate('user', 'firstName lastName userName img')
 
     const postsWithUrls = await Promise.all(posts.map(async (post) => {
+            const userImg = await getFile(post.user.img)
+            post.user.img = userImg
+
             if (post.media) {
                 const signedUrl = await getFile(post.media)
                 post.media = signedUrl
@@ -51,7 +54,6 @@ post.get('/:id', async (req, res) => {
 })
 
 post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
-    console.log('Route being pinged')
     const user = await db.User.findById(req.body.user)
     if (!user) return res.status(400).json({ 'message': 'You must be logged in to make a post' })
 
@@ -66,7 +68,6 @@ post.post('/', authenticateToken, upload.single('media'), async (req, res) => {
         res.status(200).json({ message: 'Post was successful!' })
     } else {
         const post = await db.Post.create({ ...req.body  })
-        console.log('post: ' + post)
 
         user.posts.push(post)
         await user.save()

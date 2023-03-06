@@ -20,14 +20,14 @@ const s3 = new S3Client({
 const randomImageName = (bytes = 32) => crypto.randomBytes(bytes).toString('hex')
 
 // Uploads a file to s3
-async function uploadFile(file) {
-    const buffer = await sharp(file.buffer).resize({ height: 1920, width: 1080, fit: "contain" }).toBuffer()
+exports.uploadFile = async (file) => {
+    // const buffer = await sharp(file.buffer).resize({ height: 1920, width: 1080, fit: "contain" }).toBuffer()
     const imageName = randomImageName()
 
     const params = {
         Bucket: bucketName,
         Key: imageName,
-        Body: buffer,
+        Body: file.buffer,
         ContentType: file.mimetype
     }
 
@@ -36,8 +36,6 @@ async function uploadFile(file) {
 
     return imageName
 }
-
-exports.uploadFile = uploadFile
 
 // Downloads a file from s3
 exports.getFile = async (imageName) => {

@@ -2,23 +2,40 @@ const user = require('express').Router()
 const db = require('../models')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
+const multer = require('multer')
 const authenticateToken = require('../utils')
 
 require('dotenv').config()
 const TOKEN_SECRET = process.env.TOKEN_SECRET
+
+const { uploadFile, getFile } = require('../utils/s3')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
 
 const generateAccessToken = (username) => {
     return jwt.sign(username, TOKEN_SECRET, { expiresIn: '3600s' })
 }
 
 user.get('/', authenticateToken, async (req, res) => {
-    await db.User.find().select('firstName lastName userName img')
-    .then(users => res.status(200).json(users))
-    .catch(err => console.log(err))
+    const users = await db.User.find().select('firstName lastName userName img')
+    
+    const usersWithUrls = await Promise.all(users.map(async (user) => {
+        if (user.img) {
+            const signedUrl = await getFile(user.img)
+            user.img = signedUrl
+            return user
+        }
+        return user
+    }))
+
+    res.status(200).json(usersWithUrls)
+
 })
 
-user.post('/create', async (req, res) => {
+user.post('/create', upload.single('img'), async (req, res) => {
     const { password, ...rest } = req.body
+
+    const fileName = req.file ? await uploadFile(req.file) : 'defaultuser'
 
     if(!password || !rest) {
         return res.status(400).json({ message: 'Please enter all fields' })
@@ -34,11 +51,16 @@ user.post('/create', async (req, res) => {
 
     db.User.create({
         ...rest,
+        img: fileName,
         password: await bcrypt.hash(password, 10)
     })
     .then(async () => {
         const token = generateAccessToken({ username: req.body.userName })
         const user = await db.User.findOne({ userName: req.body.userName })
+
+        const userImg = await getFile(user.img)
+        user.img = userImg
+
         return res.status(200).json({ accessToken: token, user: user })
     })
 })
@@ -49,6 +71,8 @@ user.post('/login', async (req, res) => {
     }
 
     let user = await db.User.findOne({ userName: req.body.userName })
+    let userImg = await getFile(user.img)
+    user.img = userImg
 
     if (!user) {
         return res.status(400).json({ message: 'Username is incorrect' })
@@ -56,10 +80,10 @@ user.post('/login', async (req, res) => {
 
     if (!await bcrypt.compare(req.body.password, user.password)) {
         return res.status(400).json({ message: 'Password is incorrect' })
-    } else {
-        token = generateAccessToken({ username: user.userName })
-        return res.status(200).json({ accessToken: token, user: user })
     }
+
+    token = generateAccessToken({ username: user.userName })
+    return res.status(200).json({ accessToken: token, user: user })
 
 })
 

@@ -4,6 +4,8 @@ import { GoX } from "react-icons/go"
 
 import { useStateContext } from '../context/StateContext'
 
+import { DragDrop } from '.'
+
 export default function CreateAccount() {
 
     const { login } = useStateContext()
@@ -21,15 +23,28 @@ export default function CreateAccount() {
 
     })
 
+    const imgState = (file) => {
+        setCredentials({ ...credentials, img: file })
+        console.log(credentials)
+    }
+
     async function handleSubmit(e) {
         e.preventDefault()
+
+        let formData = new FormData()
+        for (let [ key, value ] in Object.entries(credentials)) {
+            formData.append(`${key}`, value)
+        }
+        if (typeof credentials.img !== 'string') {
+            formData.append('img', credentials.img, credentials.img.name)
+        }
 
         const res = await fetch('api/user/create', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(credentials)
+            body: formData
         })
 
         const data = await res.json()
@@ -56,7 +71,7 @@ export default function CreateAccount() {
                 </div>
             }
 
-            <form className="login-form" onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="login-form">
                 <div>
                     <label htmlFor="firstName"> First Name </label>
                     <input
@@ -103,13 +118,7 @@ export default function CreateAccount() {
                 </div>
                 <div>
                     <label htmlFor='img'> Profile Picture </label>
-                    <input
-                        className='text-input'
-                        type='text'
-                        name='img'
-                        value={credentials.img}
-                        onChange={e => setCredentials({ ...credentials, img: e.target.value })}
-                    />
+                    <DragDrop changeState={imgState} />
                 </div>
                 <div>
                     <label htmlFor='bio'> Bio </label>
@@ -132,7 +141,7 @@ export default function CreateAccount() {
                         required
                     />
                 </div>
-                <input type='submit' value='Create' className='btn' style={{ textAlign: 'center' }}/>
+                <button type='submit' className='btn' style={{ textAlign: 'center' }}> Create </button>
             </form>
             </div>
         </div>
