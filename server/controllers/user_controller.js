@@ -71,8 +71,6 @@ user.post('/login', async (req, res) => {
     }
 
     let user = await db.User.findOne({ userName: req.body.userName })
-    let userImg = await getFile(user.img)
-    user.img = userImg
 
     if (!user) {
         return res.status(400).json({ message: 'Username is incorrect' })
@@ -83,6 +81,10 @@ user.post('/login', async (req, res) => {
     }
 
     token = generateAccessToken({ username: user.userName })
+
+    let userImg = await getFile(user.img)
+    user.img = userImg
+    
     return res.status(200).json({ accessToken: token, user: user })
 
 })

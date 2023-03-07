@@ -47,8 +47,10 @@ export default function DragDrop({ changeState }) {
                         ref={inputRef}
                     />
                     <button 
-                    onClick={() => inputRef.current.click()
-                    }>Select Files</button>
+                    onClick={(e) => {
+                        e.preventDefault()
+                        inputRef.current.click()
+                }}>Select Files</button>
                 </div>
             )}
         </>

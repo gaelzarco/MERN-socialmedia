@@ -22,12 +22,14 @@ export default function CreatePost() {
         e.preventDefault()
 
         let formData = new FormData()
-        for (let [ key, value ] in Object.entries(post)) {
+        for (let [ key, value ] of Object.entries(post)) {
             formData.append(`${key}`, value)
         }
         if (typeof post.media !== "string") {
-            formData.append('media', post.media, post.media.name)
+            formData.set('media', post.media, post.media.name)
         }
+
+        console.log(formData)
 
         const res = await fetch('/api/posts', {
             method: 'POST',

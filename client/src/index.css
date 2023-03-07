@@ -4,16 +4,31 @@ body {
   sans-serif;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
+  height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   color: white;
-  background-color: rgb(15, 15, 15);
+  background-color: rgb(0, 0, 0);
+}
+
+@font-face {
+  font-family: NTSomic;
+  src: url('assets/TTF/NTSomic-Regular.ttf');
+}
+@font-face {
+  font-family: NTSomic Bold;
+  src: url('assets/TTF/NTSomic-Bold.ttf');
+}
+@font-face {
+  font-family: NTSomic Medium;
+  src: url('assets/TTF/NTSomic-Medium.ttf');
 }
 
 .layout {
   height: 100%;
   width: 100%;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 .main {
@@ -24,6 +39,103 @@ body {
 .main-static {
   margin: auto;
   width: 1200px;
+}
+
+.landing-container{
+  font-family: NTSomic;
+  min-height: 72vh;
+  width: 100vw;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+
+.l-footer {
+  border-top: 1px solid white;
+  border-bottom: 1px solid white;
+  width: 80%;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin: auto;
+}
+
+.landing-container video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  min-height: 120vh;
+  min-width: 100vw;
+  overflow-x: hidden;
+  transform: translateY(-10%);
+}
+
+.landing-left {
+  margin: auto;
+  width: 30%;
+  transform: translateX(-50%);
+}
+
+.landing-left h1 {
+  font-family: NTSomic Bold;
+  font-size: 80px;
+  margin-bottom: 25px;
+  line-height: 70px;
+}
+
+.left-container{
+  display: flex;
+}
+
+.left-container p {
+  font-size: 25px;
+  font-size: 25px;
+  transform: translateY(-20%);
+}
+
+.left-container div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 35px;
+}
+
+.l-btn {
+  font-family: NTSomic Bold;
+  color: white;
+  font-weight: 500;
+  font-size: 20px;
+  display: block;
+  width: 150px;
+  height: 40px;
+  border: none;
+  margin-block: 10px;
+  border-radius: 200px;
+  transform: translateY(-40%);
+}
+
+#lbtn1:hover {
+  background-color: rgb(143, 87, 255);
+}
+
+#lbtn2:hover {
+  border-color: rgb(143, 87, 255);
+  color: rgb(143, 87, 255);
+}
+
+#lbtn1 {
+  color: white;
+  background-color: rgb(113, 57, 225);
+  transition: all 0.5s;
+}
+
+#lbtn2 {
+  background: transparent;
+  border: 1px solid white;
+  transition: all 0.5s;
 }
 
 .create-post {

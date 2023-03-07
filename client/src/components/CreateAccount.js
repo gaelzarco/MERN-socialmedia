@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { GoX } from "react-icons/go"
 
@@ -32,11 +32,11 @@ export default function CreateAccount() {
         e.preventDefault()
 
         let formData = new FormData()
-        for (let [ key, value ] in Object.entries(credentials)) {
+        for (let [ key, value ] of Object.entries(credentials)) {
             formData.append(`${key}`, value)
         }
         if (typeof credentials.img !== 'string') {
-            formData.append('img', credentials.img, credentials.img.name)
+            formData.set('img', credentials.img, credentials.img.name)
         }
 
         const res = await fetch('api/user/create', {
@@ -56,6 +56,10 @@ export default function CreateAccount() {
             setErrMessage(data.message)
         }
     }
+
+    useEffect(() => {
+        console.log(credentials)
+    }, [credentials])
 
     return (
         <div className="login-container">
@@ -141,7 +145,9 @@ export default function CreateAccount() {
                         required
                     />
                 </div>
-                <button type='submit' className='btn' style={{ textAlign: 'center' }}> Create </button>
+                <div>
+                    <button type='submit' className='btn' style={{ textAlign: 'center' }}> Create </button>
+                </div>
             </form>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { useStateContext } from "./context/StateContext";
-import { ProtectedRoutes, NavBar, SideBar, Feed, Post, Comment, Login, CreateAccount, Profile, LandingFooter } from './components';
+import { ProtectedRoutes, NavBar, Landing, SideBar, Feed, Post, Comment, Login, CreateAccount, Profile, LandingFooter } from './components';
 
 function App() {
   const { auth, setAuth } = useStateContext()
@@ -23,10 +23,11 @@ function App() {
 
   return (
     <>
-      <div className="main-static">
-        <NavBar />
+      <div>
+        {/* <NavBar /> */}
           <Routes>
-            <Route path="/" element={<Feed />} />
+            <Route path='/landing' element={<Landing />} />
+            <Route path="/feed" element={<Feed />} />
             <Route path="/post/:id" element={<Post />} />
             <Route path='comment/:id' element={<Comment />} />
             <Route path="/login" element={<Login />} />
@@ -35,10 +36,10 @@ function App() {
               <Route path="/profile" element={<Profile />} />
             </Route>
           </Routes>
-        <SideBar />
+        {/* <SideBar /> */}
       </div>
 
-      {!auth && <LandingFooter/>}
+      {/* {!auth && <LandingFooter/>} */}
 
     </>
   );
