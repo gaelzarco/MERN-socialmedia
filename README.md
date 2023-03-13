@@ -1,6 +1,7 @@
 
 ![Logo](https://readmeimg.s3.us-west-2.amazonaws.com/socialmedlogo.png)
 
+# LEGACY. PROJECT MIGRATED TO T3 STACK.
 
 # MERN-Stack Social Media
 
